@@ -1,0 +1,185 @@
+Dependencies for Project 'feixingqi', Target 'Target 1': (DO NOT MODIFY !)
+F (..\CMSIS\startup\startup_stm32f10x_md.s)(0x4D783CD2)(--cpu Cortex-M3 -g --apcs=interwork -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x --list ".\startup_stm32f10x_md.lst" --xref -o "..\Output\startup_stm32f10x_md.o" --depend "..\Output\startup_stm32f10x_md.d")
+F (..\CMSIS\core_cm3.c)(0x4C0C587E)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\core_cm3.o" --omf_browse "..\Output\core_cm3.crf" --depend "..\Output\core_cm3.d")
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+F (..\CMSIS\system_stm32f10x.c)(0x53A71198)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\system_stm32f10x.o" --omf_browse "..\Output\system_stm32f10x.crf" --depend "..\Output\system_stm32f10x.d")
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+F (..\Lib\misc.c)(0x4D783BB4)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\misc.o" --omf_browse "..\Output\misc.crf" --depend "..\Output\misc.d")
+I (..\Lib\misc.h)(0x4D783BB4)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+F (..\Lib\stm32f10x_gpio.c)(0x4D79EEC6)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\stm32f10x_gpio.o" --omf_browse "..\Output\stm32f10x_gpio.crf" --depend "..\Output\stm32f10x_gpio.d")
+I (..\Lib\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+I (..\Lib\stm32f10x_rcc.h)(0x4D783BB4)
+F (..\Lib\stm32f10x_rcc.c)(0x4D783BB4)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\stm32f10x_rcc.o" --omf_browse "..\Output\stm32f10x_rcc.crf" --depend "..\Output\stm32f10x_rcc.d")
+I (..\Lib\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+F (..\Lib\stm32f10x_usart.c)(0x4D783BB4)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\stm32f10x_usart.o" --omf_browse "..\Output\stm32f10x_usart.crf" --depend "..\Output\stm32f10x_usart.d")
+I (..\Lib\stm32f10x_usart.h)(0x4D783BB4)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+I (..\Lib\stm32f10x_rcc.h)(0x4D783BB4)
+F (..\Lib\stm32f10x_tim.c)(0x50532FF6)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\stm32f10x_tim.o" --omf_browse "..\Output\stm32f10x_tim.crf" --depend "..\Output\stm32f10x_tim.d")
+I (..\Lib\stm32f10x_tim.h)(0x4D783BB4)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+I (..\Lib\stm32f10x_rcc.h)(0x4D783BB4)
+F (..\User\main.c)(0x53F21F2D)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\main.o" --omf_browse "..\Output\main.crf" --depend "..\Output\main.d")
+I (..\User\Config.h)(0x53909E5E)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+I (..\Lib\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\stm32f10x_rcc.h)(0x4D783BB4)
+I (D:\Keil\ARM\RV31\INC\math.h)(0x4F58357A)
+I (..\System\sys.h)(0x53C7C192)
+I (..\HardWareDriver\H\NRF24L01.h)(0x53C7BF96)
+I (..\System\spi.h)(0x5220E365)
+I (..\HardWareDriver\H\LED.h)(0x53C7C78C)
+I (..\Lib\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Lib\misc.h)(0x4D783BB4)
+I (..\HardWareDriver\H\adc.h)(0x53EF077E)
+I (..\HardWareDriver\H\LCD5110.h)(0x53022396)
+I (..\HardWareDriver\H\Tim.h)(0x52E786B3)
+I (..\HardWareDriver\H\Display.h)(0x53EF0829)
+I (..\User\delay.h)(0x52F9C8FB)
+I (..\HardWareDriver\H\Key.h)(0x53C7C525)
+I (..\Lib\stm32f10x_exti.h)(0x4D783BB4)
+F (..\System\sys.c)(0x53E78B41)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\sys.o" --omf_browse "..\Output\sys.crf" --depend "..\Output\sys.d")
+I (..\User\Config.h)(0x53909E5E)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+I (..\Lib\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\stm32f10x_rcc.h)(0x4D783BB4)
+I (D:\Keil\ARM\RV31\INC\math.h)(0x4F58357A)
+I (..\System\sys.h)(0x53C7C192)
+I (..\HardWareDriver\H\NRF24L01.h)(0x53C7BF96)
+I (..\System\spi.h)(0x5220E365)
+I (..\HardWareDriver\H\LED.h)(0x53C7C78C)
+I (..\Lib\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Lib\misc.h)(0x4D783BB4)
+I (..\HardWareDriver\H\adc.h)(0x53EF077E)
+I (..\HardWareDriver\H\LCD5110.h)(0x53022396)
+I (..\HardWareDriver\H\Tim.h)(0x52E786B3)
+I (..\HardWareDriver\H\Display.h)(0x53EF0829)
+I (..\User\delay.h)(0x52F9C8FB)
+I (..\HardWareDriver\H\Key.h)(0x53C7C525)
+I (..\Lib\stm32f10x_exti.h)(0x4D783BB4)
+F (..\System\spi.c)(0x53E78BE9)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\spi.o" --omf_browse "..\Output\spi.crf" --depend "..\Output\spi.d")
+I (..\System\spi.h)(0x5220E365)
+I (..\System\sys.h)(0x53C7C192)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+F (..\System\delay.c)(0x53E78BE9)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\delay.o" --omf_browse "..\Output\delay.crf" --depend "..\Output\delay.d")
+I (..\System\delay.h)(0x52F9C8FB)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+F (..\HardWareDriver\C\adc.c)(0x53E78C3B)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\adc.o" --omf_browse "..\Output\adc.crf" --depend "..\Output\adc.d")
+I (..\HardWareDriver\H\adc.h)(0x53EF077E)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+F (..\HardWareDriver\C\Led.c)(0x53E78C3B)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\led.o" --omf_browse "..\Output\led.crf" --depend "..\Output\led.d")
+I (..\HardWareDriver\H\Led.h)(0x53C7C78C)
+I (..\System\sys.h)(0x53C7C192)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+F (..\HardWareDriver\C\NRF24L01.c)(0x53E78C82)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\nrf24l01.o" --omf_browse "..\Output\nrf24l01.crf" --depend "..\Output\nrf24l01.d")
+I (..\User\Config.h)(0x53909E5E)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+I (..\Lib\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\stm32f10x_rcc.h)(0x4D783BB4)
+I (D:\Keil\ARM\RV31\INC\math.h)(0x4F58357A)
+I (..\System\sys.h)(0x53C7C192)
+I (..\HardWareDriver\H\NRF24L01.h)(0x53C7BF96)
+I (..\System\spi.h)(0x5220E365)
+I (..\HardWareDriver\H\LED.h)(0x53C7C78C)
+I (..\Lib\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Lib\misc.h)(0x4D783BB4)
+I (..\HardWareDriver\H\adc.h)(0x53EF077E)
+I (..\HardWareDriver\H\LCD5110.h)(0x53022396)
+I (..\HardWareDriver\H\Tim.h)(0x52E786B3)
+I (..\HardWareDriver\H\Display.h)(0x53EF0829)
+I (..\User\delay.h)(0x52F9C8FB)
+I (..\HardWareDriver\H\Key.h)(0x53C7C525)
+I (..\Lib\stm32f10x_exti.h)(0x4D783BB4)
+F (..\HardWareDriver\C\stmflash.c)(0x53E78C82)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\stmflash.o" --omf_browse "..\Output\stmflash.crf" --depend "..\Output\stmflash.d")
+I (..\HardWareDriver\H\stmflash.h)(0x52FA5BF7)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+I (..\System\delay.h)(0x52F9C8FB)
+F (..\HardWareDriver\C\Tim.c)(0x53E78D5B)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\tim.o" --omf_browse "..\Output\tim.crf" --depend "..\Output\tim.d")
+I (..\HardWareDriver\H\tim.h)(0x52E786B3)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+I (..\Lib\stm32f10x_tim.h)(0x4D783BB4)
+I (..\Lib\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\HardWareDriver\H\NRF24L01.h)(0x53C7BF96)
+I (..\System\sys.h)(0x53C7C192)
+I (..\HardWareDriver\H\Led.h)(0x53C7C78C)
+I (..\Lib\misc.h)(0x4D783BB4)
+I (..\HardWareDriver\H\Display.h)(0x53EF0829)
+F (..\HardWareDriver\C\Display.c)(0x53EF0C0B)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\display.o" --omf_browse "..\Output\display.crf" --depend "..\Output\display.d")
+I (..\HardWareDriver\H\adc.h)(0x53EF077E)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
+F (..\HardWareDriver\C\Key.c)(0x53E78DAA)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CMSIS -I..\System -I..\User -I..\HardWareDriver\C -I..\HardWareDriver\H -I..\Lib -I D:\Keil\ARM\RV31\INC -I D:\Keil\ARM\CMSIS\Include -I D:\Keil\ARM\Inc\ST\STM32F10x -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\Output\key.o" --omf_browse "..\Output\key.crf" --depend "..\Output\key.d")
+I (..\HardWareDriver\H\Key.h)(0x53C7C525)
+I (..\System\sys.h)(0x53C7C192)
+I (..\CMSIS\stm32f10x.h)(0x4F4219C0)
+I (..\CMSIS\core_cm3.h)(0x4D523B58)
+I (D:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x50CB67D8)
