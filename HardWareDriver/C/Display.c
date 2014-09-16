@@ -39,7 +39,13 @@ Tim.c file
     int Pitch;
     int Yaw;
     int Battery;//定义待显示量
-    
+
+
+char Throttle_Offest=0;
+char Pitch_Offest=0;
+char Roll_Offest=0;
+char Yaw_Offest=0;//遥控微调
+
     
 /*
 摇杆数据采集
@@ -53,19 +59,19 @@ void GetAD(unsigned char RomoteMode)
     /*以下为美国手的对应关系*/
  case America:
                 
-      Throttle=99-(100*Get_Adc_Average(3,15))/4096;//采集油门摇杆的位置，由于硬件原因，需要用100-采集值
+      Throttle=Throttle_Offest+99-(100*Get_Adc_Average(3,15))/4096;//采集油门摇杆的位置，由于硬件原因，需要用100-采集值
       Throttle=(Throttle<=0)?0:Throttle;                 //越界判断
       Throttle=(Throttle>=99)?99:Throttle;               //越界判断
 
-      Pitch=-1+(100*Get_Adc_Average(1,15))/4096;//采集俯仰摇杆的位置，赋值给对应的俯仰变量
+      Pitch=Pitch_Offest+(100*Get_Adc_Average(1,15))/4096;//采集俯仰摇杆的位置，赋值给对应的俯仰变量
       Pitch=(Pitch<=0)?0:Pitch;                 //越界判断
       Pitch=(Pitch>=99)?99:Pitch;               //越界判断
 
-      Roll=1+(100*Get_Adc_Average(0,15))/4096;//采集横滚摇杆位置，赋值给对应的横滚变量
+      Roll=Roll_Offest+(100*Get_Adc_Average(0,15))/4096;//采集横滚摇杆位置，赋值给对应的横滚变量
       Roll=(Roll<=0)?0:Roll;                //越界判断
       Roll=(Roll>=99)?99:Roll;              //越界判断
 
-      Yaw=(100*Get_Adc_Average(2,15))/4096;//采集横滚摇杆位置，赋值给对应的偏航角
+      Yaw=Yaw_Offest+(100*Get_Adc_Average(2,15))/4096;//采集横滚摇杆位置，赋值给对应的偏航角
       Yaw=(Yaw<=0)?0:Yaw;                //越界判断
       Yaw=(Yaw>=99)?99:Yaw;              //越界判断
 
@@ -75,19 +81,19 @@ void GetAD(unsigned char RomoteMode)
           break;
     /*以下为日本手的对应关系*/
  case Japan:
-      Throttle=(100*Get_Adc_Average(1,15))/4096;//采集油门摇杆的位置，由于硬件原因，需要用100-采集值
+      Throttle=Throttle_Offest+(100*Get_Adc_Average(1,15))/4096;//采集油门摇杆的位置，由于硬件原因，需要用100-采集值
       Throttle=(Throttle<=0)?0:Throttle;                 //越界判断
       Throttle=(Throttle>=99)?99:Throttle;               //越界判断
 
-      Pitch=100-(100*Get_Adc_Average(3,15))/4096;//采集俯仰摇杆的位置，赋值给对应的俯仰变量
+      Pitch=Pitch_Offest+100-(100*Get_Adc_Average(3,15))/4096;//采集俯仰摇杆的位置，赋值给对应的俯仰变量
       Pitch=(Pitch<=0)?0:Pitch;                 //越界判断
       Pitch=(Pitch>=99)?99:Pitch;               //越界判断
 
-      Roll=1+(100*Get_Adc_Average(0,15))/4096;//采集横滚摇杆位置，赋值给对应的横滚变量
+      Roll=Roll_Offest+(100*Get_Adc_Average(0,15))/4096;//采集横滚摇杆位置，赋值给对应的横滚变量
       Roll=(Roll<=0)?0:Roll;                //越界判断
       Roll=(Roll>=99)?99:Roll;              //越界判断
 
-      Yaw=(100*Get_Adc_Average(2,15))/4096;//采集横滚摇杆位置，赋值给对应的偏航角
+      Yaw=Yaw_Offest+(100*Get_Adc_Average(2,15))/4096;//采集横滚摇杆位置，赋值给对应的偏航角
       Yaw=(Yaw<=0)?0:Yaw;                //越界判断
       Yaw=(Yaw>=99)?99:Yaw;              //越界判断
 
