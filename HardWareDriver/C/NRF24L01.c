@@ -28,7 +28,6 @@ u8 RxBuf[32];//接收数组
 const u8 TX_ADDRESS[TX_ADR_WIDTH]={0x34,0xc3,0x10,0x10,0x11}; //发送地址
 const u8 RX_ADDRESS[RX_ADR_WIDTH]={0x34,0xc3,0x10,0x10,0x11}; //发送地址
 
- 
 //初始化24L01的IO口
 u8 NRF24L01_Init(void)
 {
