@@ -34,15 +34,42 @@ Key3-->PB3
 ********************************************/
 void KeyInit(void)
 {
-    RCC->APB2ENR|=1<<3;    //使能PORTB时钟
-    GPIOB->CRL&=0XFFFF0F0F;  //PB1,2,3输入
-    GPIOB->CRL|=0X00008080;
-    GPIOB->ODR|=7<<1;        //PB1,2,3上拉
-    
-    RCC->APB2ENR|=1<<2;    //使能PORTA时钟
-    GPIOB->CRH&=0XFFFFFFF0;  //PA8输入
-    GPIOB->CRH|=0X00000008;
-    GPIOB->ODR|=1<<8;        //PA8上拉
+	GPIO_InitTypeDef GPIO_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
+	EXTI_InitTypeDef EXTI_InitStructure;
+
+	/* config the extiline(PB1) clock and AFIO clock */
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO,ENABLE);
+
+	/* config the NVIC(PB1) */
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+
+	/* Configure PB1 as output push-pull */
+	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_1 ;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource1);
+	
+	EXTI_InitStructure.EXTI_Line = EXTI_Line1;            //设定外部中断1
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;  //设定中断模式
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //设定下降沿触发模式
+	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	EXTI_Init(&EXTI_InitStructure);
+	
+}
+
+void EXTI1_IRQHandler(void){
+	if(EXTI_GetITStatus(EXTI_Line1) != RESET) //确保是否产生了EXTI Line中断
+	{
+		printf("hello");
+		EXTI_ClearITPendingBit(EXTI_Line1);     //清除中断标志位
+	}
 }
 
 
