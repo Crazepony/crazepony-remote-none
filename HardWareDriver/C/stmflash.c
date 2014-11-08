@@ -200,6 +200,19 @@ void STMFLASH_Read(u32 ReadAddr,u16 *pBuffer,u16 NumToRead)
 	}
 }
 
+//从指定地址开始读出一个int
+//ReadAddr:起始地址
+//pBuffer:数据指针
+void STMFLASH_Read_INT(u32 ReadAddr,u32 *pBuffer)   	
+{
+	u16 i;
+	for(i=0;i<2;i++)
+	{
+		pBuffer[i]=STMFLASH_ReadHalfWord(ReadAddr);//读取2个字节.
+		ReadAddr+=2;//偏移2个字节.	
+	}
+}
+
 //////////////////////////////////////////测试用///////////////////////////////////////////
 //WriteAddr:起始地址
 //WriteData:要写入的数据

@@ -25,10 +25,17 @@ main.c file
 
 #define  R_Mode  America  //修改宏定义，切换遥控操作方式为美国手还是日本手
 
+extern int offset_flag;
+extern int  Pitch_Offest;
+extern int  Roll_Offest;
+
 int main(void)
 {
-   // int i;
-	  SystemClock_HSI(9);    //系统时钟设置,9倍频，36M
+	u16 offset_value;
+	u16 buffer[2];
+    int i = 0;
+	
+	SystemClock_HSI(9);    //系统时钟设置,9倍频，36M
     NVIC_INIT();	                //中断初始化
     UART1_init(SysClock,115200);
     STMFLASH_Unlock();            //内部flash解锁
@@ -54,16 +61,43 @@ int main(void)
 //解锁完成
 /*******************************************************/
     
-   Led1=0;
-   Led2=0;
-   Led3=0;
-   Led4=0;
-   Led5=0;
-     
+	Led1=0;
+	Led2=0;
+	Led3=0;
+	Led4=0;
+	Led5=0;
+
+	//flash中读取遥控微调值
+	STMFLASH_Read_INT(STM32_FLASH_BASE+STM32_FLASH_OFFEST+0,&Pitch_Offest);
+	STMFLASH_Read_INT(STM32_FLASH_BASE+STM32_FLASH_OFFEST+4,&Roll_Offest);
+	if((Pitch_Offest < -100)||(Pitch_Offest > 100)){
+		Pitch_Offest = -50;
+	}
+	if((Roll_Offest < -100)||(Roll_Offest > 100)){
+		Roll_Offest = -50;
+	}
+	 													   
  	while(1)
 	{  
       
-    GetAD(R_Mode);    //得到各路AD，中断发送
+	    GetAD(R_Mode);    //得到各路AD，中断发送
+	
+		if((1 == offset_flag) && (i > 20)){
+			//遥控微调值被改变，写入flash
+			offset_flag = 0;
+			i = 0;
+
+			printf("Pitch_Offest:%d\r\n",Pitch_Offest);
+		   	printf("Roll_Offest:%d\r\n",Roll_Offest);
+
+			buffer[0] =  (u16)Pitch_Offest;
+			buffer[0] =  (u16)(Pitch_Offest>>8);
+			STMFLASH_Write(STM32_FLASH_BASE+STM32_FLASH_OFFEST+0,buffer,4);
+			buffer[0] =  (u16)Roll_Offest;
+			buffer[0] =  (u16)(Roll_Offest>>8);
+			STMFLASH_Write(STM32_FLASH_BASE+STM32_FLASH_OFFEST+4,buffer,4);
+		}
+		i++;
  
 //       
 //    

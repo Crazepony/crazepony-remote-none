@@ -114,6 +114,7 @@ void KeyInit(void)
 }
 
 int key_mode = 0;	//标示现在按键所处模式，由key2进行切换。0：微调pitch模式，1：微调roll模式
+int offset_flag = 0;
 
 void EXTI1_IRQHandler(void){
 	if(EXTI_GetITStatus(EXTI_Line1) != RESET) //确保是否产生了EXTI Line中断
@@ -141,6 +142,7 @@ void EXTI3_IRQHandler(void){
 		}
 
 	 	Led3 = 1;
+		offset_flag = 1;
 		printf("key 3\n");
 		EXTI_ClearITPendingBit(EXTI_Line3);     //清除中断标志位
 	}
@@ -157,7 +159,7 @@ void EXTI9_5_IRQHandler(void){
 		}
 
 	 	Led4 = 1;
-
+		offset_flag = 1;
 		printf("key 4\n");
 		EXTI_ClearITPendingBit(EXTI_Line8);     //清除中断标志位
 	}
