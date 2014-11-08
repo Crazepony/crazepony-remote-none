@@ -68,34 +68,37 @@ int main(void)
 	Led5=0;
 
 	//flash中读取遥控微调值
-	STMFLASH_Read_INT(STM32_FLASH_BASE+STM32_FLASH_OFFEST+0,&Pitch_Offest);
-	STMFLASH_Read_INT(STM32_FLASH_BASE+STM32_FLASH_OFFEST+4,&Roll_Offest);
-	if((Pitch_Offest < -100)||(Pitch_Offest > 100)){
+	STMFLASH_Read(STM32_FLASH_BASE+STM32_FLASH_OFFEST+0,&buffer[0],1);
+	STMFLASH_Read(STM32_FLASH_BASE+STM32_FLASH_OFFEST+4,&buffer[1],1);
+	
+	Pitch_Offest = buffer[0] - 100;
+	Roll_Offest = buffer[1] - 100;
+	if((Pitch_Offest < -100)||(Pitch_Offest > 0)){
 		Pitch_Offest = -50;
 	}
-	if((Roll_Offest < -100)||(Roll_Offest > 100)){
+	if((Roll_Offest < -100)||(Roll_Offest > 0)){
 		Roll_Offest = -50;
 	}
+	printf("read pitch:%d   roll:%d\r\n",Pitch_Offest,Roll_Offest);
 	 													   
  	while(1)
 	{  
       
 	    GetAD(R_Mode);    //得到各路AD，中断发送
 	
-		if((1 == offset_flag) && (i > 20)){
+		if((1 == offset_flag) && (i > 100)){
 			//遥控微调值被改变，写入flash
 			offset_flag = 0;
 			i = 0;
-
-			printf("Pitch_Offest:%d\r\n",Pitch_Offest);
-		   	printf("Roll_Offest:%d\r\n",Roll_Offest);
-
-			buffer[0] =  (u16)Pitch_Offest;
-			buffer[0] =  (u16)(Pitch_Offest>>8);
-			STMFLASH_Write(STM32_FLASH_BASE+STM32_FLASH_OFFEST+0,buffer,4);
-			buffer[0] =  (u16)Roll_Offest;
-			buffer[0] =  (u16)(Roll_Offest>>8);
-			STMFLASH_Write(STM32_FLASH_BASE+STM32_FLASH_OFFEST+4,buffer,4);
+			
+			printf("Write Pitch_Offest:%d\r\n",Pitch_Offest);
+		  printf("Write Roll_Offest:%d\r\n",Roll_Offest);
+			
+			buffer[0] =  100 + Pitch_Offest;
+			buffer[1] =  100 + Roll_Offest;
+			
+			STMFLASH_Write(STM32_FLASH_BASE+STM32_FLASH_OFFEST+0,&buffer[0],4);
+			STMFLASH_Write(STM32_FLASH_BASE+STM32_FLASH_OFFEST+4,&buffer[1],4);
 		}
 		i++;
  
