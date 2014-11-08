@@ -23,7 +23,6 @@
 
 
 void KeyInit(void);   //Key初始化函数外部声明
-char KeyScan(void);   //按键扫描函数
 
 
 #endif

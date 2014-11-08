@@ -25,14 +25,8 @@ main.c file
 
 #define  R_Mode  America  //修改宏定义，切换遥控操作方式为美国手还是日本手
 
-extern int  Pitch_Offest;
-extern int  Roll_Offest;
-
 int main(void)
 {
-
-	int key_mode = 0;	//标示现在按键所处模式，由key2进行切换。0：微调pitch模式，1：微调roll模式
-  
    // int i;
 	  SystemClock_HSI(9);    //系统时钟设置,9倍频，36M
     NVIC_INIT();	                //中断初始化
@@ -70,45 +64,7 @@ int main(void)
 	{  
       
     GetAD(R_Mode);    //得到各路AD，中断发送
-    
-    if(KeyScan() == kSet_Mode_Choose){
-		if(0 == key_mode){
-			key_mode = 1;
-			Led2 = 1;	//Led2亮起标示进入了微调roll的模式
-		}else{
-			key_mode = 0;
-			Led2 = 0;	//Led2灭掉标示进入了微调pitch的模式
-		}
-	}
-       
-    if(KeyScan() == kValueinc){
-		if(0 == key_mode)	//微调pitch
-		{
-			Pitch_Offest++;
-		}else{	//微调roll
-			Roll_Offest++;
-		}
-
-	 	Led3 = 1;
-	}
-      
-    if(KeyScan() == kValuedec){
-		if(0 == key_mode)	//微调pitch
-		{
-			Pitch_Offest--;
-		}else{	//微调roll
-			Roll_Offest--;
-		}
-
-	 	Led4 = 1;
-	}
-
-	printf("pitch offset %d\r\n",(int) Pitch_Offest);
-	printf("roll offset %d\r\n",(int) Roll_Offest);
-    
-	
-	//遥控上的Key1暂时不用，余下的三个按键自定义，可以设置为偏航调节，一键动作等等
-      
+ 
 //       
 //    
 // //测试环形缓冲数组用，可以无视或者直接注释掉。不注释也不影响操作

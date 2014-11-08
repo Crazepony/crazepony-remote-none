@@ -1,4 +1,5 @@
 #include "Key.h"
+#include "Led.h"
 /*    
       ____                      _____                  +---+
      / ___\                     / __ \                 | R |
@@ -18,8 +19,13 @@ Tim.c file
 功能：
 1.按键IO口初始化
 2.这部分按键的功能是对外开放的，我没有定义 其功能，大家自由发挥吧
+3.遥控上的Key1暂时不用，余下的三个按键自定义，可以设置为偏航调节，一键动作等等
 ------------------------------------
 */
+
+
+extern int  Pitch_Offest;
+extern int  Roll_Offest;
 
 /********************************************
               Key初始化函数
@@ -107,9 +113,18 @@ void KeyInit(void)
 	
 }
 
+int key_mode = 0;	//标示现在按键所处模式，由key2进行切换。0：微调pitch模式，1：微调roll模式
+
 void EXTI1_IRQHandler(void){
 	if(EXTI_GetITStatus(EXTI_Line1) != RESET) //确保是否产生了EXTI Line中断
 	{
+		if(0 == key_mode){
+			key_mode = 1;
+			Led2 = 1;	//Led2亮起标示进入了微调roll的模式
+		}else{
+			key_mode = 0;
+			Led2 = 0;	//Led2灭掉标示进入了微调pitch的模式
+		}
 		printf("key 2\n");
 		EXTI_ClearITPendingBit(EXTI_Line1);     //清除中断标志位
 	}
@@ -118,6 +133,14 @@ void EXTI1_IRQHandler(void){
 void EXTI3_IRQHandler(void){
 	if(EXTI_GetITStatus(EXTI_Line3) != RESET) //确保是否产生了EXTI Line中断
 	{
+		if(0 == key_mode)	//微调pitch
+		{
+			Pitch_Offest++;
+		}else{	//微调roll
+			Roll_Offest++;
+		}
+
+	 	Led3 = 1;
 		printf("key 3\n");
 		EXTI_ClearITPendingBit(EXTI_Line3);     //清除中断标志位
 	}
@@ -125,22 +148,20 @@ void EXTI3_IRQHandler(void){
 
 void EXTI9_5_IRQHandler(void){
 	if(EXTI_GetITStatus(EXTI_Line8) != RESET) //确保是否产生了EXTI Line中断
-	{
+	{	    
+		if(0 == key_mode)	//微调pitch
+		{
+			Pitch_Offest--;
+		}else{	//微调roll
+			Roll_Offest--;
+		}
+
+	 	Led4 = 1;
+
 		printf("key 4\n");
 		EXTI_ClearITPendingBit(EXTI_Line8);     //清除中断标志位
 	}
 }
-
-
-char KeyScan(void)
-{
- if(Key2 == kPress) return kSet_Mode_Choose;
- if(Key3 == kPress) return kValueinc;
- if(Key4 == kPress) return kValuedec;
- 
- return 0x15;
-}
-
 
 
 
