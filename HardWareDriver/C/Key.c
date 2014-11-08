@@ -38,25 +38,68 @@ void KeyInit(void)
 	NVIC_InitTypeDef NVIC_InitStructure;
 	EXTI_InitTypeDef EXTI_InitStructure;
 
-	/* config the extiline(PB1) clock and AFIO clock */
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO,ENABLE);
+	/* config the extiline(PB1,PB3,PA8) clock and AFIO clock */
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO,ENABLE);
 
-	/* config the NVIC(PB1) */
+	/* config the NVIC(Key2-->PB1) */
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
-	/* Configure PB1 as output push-pull */
+	/* config the NVIC(Key3-->PB3) */
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI3_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 5;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+
+	/* config the NVIC(Key4-->PA8) */
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 6;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+
+	/* Configure Key2-->PB1 as output push-pull */
 	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_1 ;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource1);
+	/* Configure Key3-->PB3 as output push-pull */
+	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_3 ;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+	/* Configure Key4-->PA8 as output push-pull */
+	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_8 ;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+
 	
+	//Key2-->PB1
+	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource1);
 	EXTI_InitStructure.EXTI_Line = EXTI_Line1;            //设定外部中断1
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;  //设定中断模式
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //设定下降沿触发模式
+	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	EXTI_Init(&EXTI_InitStructure);
+
+	//Key3-->PB3
+	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource3);
+	EXTI_InitStructure.EXTI_Line = EXTI_Line3;            //设定外部中断1
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;  //设定中断模式
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //设定下降沿触发模式
+	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	EXTI_Init(&EXTI_InitStructure);
+
+	//Key4-->PA8
+	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource8);
+	EXTI_InitStructure.EXTI_Line = EXTI_Line8;            //设定外部中断1
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;  //设定中断模式
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //设定下降沿触发模式
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
@@ -67,8 +110,24 @@ void KeyInit(void)
 void EXTI1_IRQHandler(void){
 	if(EXTI_GetITStatus(EXTI_Line1) != RESET) //确保是否产生了EXTI Line中断
 	{
-		printf("hello");
+		printf("key 2\n");
 		EXTI_ClearITPendingBit(EXTI_Line1);     //清除中断标志位
+	}
+}
+
+void EXTI3_IRQHandler(void){
+	if(EXTI_GetITStatus(EXTI_Line3) != RESET) //确保是否产生了EXTI Line中断
+	{
+		printf("key 3\n");
+		EXTI_ClearITPendingBit(EXTI_Line3);     //清除中断标志位
+	}
+}
+
+void EXTI9_5_IRQHandler(void){
+	if(EXTI_GetITStatus(EXTI_Line8) != RESET) //确保是否产生了EXTI Line中断
+	{
+		printf("key 4\n");
+		EXTI_ClearITPendingBit(EXTI_Line8);     //清除中断标志位
 	}
 }
 
