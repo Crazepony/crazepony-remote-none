@@ -56,6 +56,11 @@
 
 #define NRF24L01_IRQ  PAin(11)  //IRQ主机数据输入
 
+#define RemoteTxaddr   TX_ADDRESS[4]  //remote tx addr
+
+
+
+
 char NRF24L01_INIT(void);
 void SetRX_Mode(void);
 void SetTX_Mode(void);

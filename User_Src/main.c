@@ -24,7 +24,6 @@ main.c file
 
 #define debugprint
 
-
 uint32_t t0,t1;
 
 extern char Lockflag;
@@ -35,8 +34,12 @@ static char Locksta = 0xa5;
 
 int main(void)
 {
+
 	static char ledsta;
 	static u8 i;
+	/*************remote tx addr*******/
+	RemoteTxaddr = 0xd0;
+ /***********************************/
 	SystemClock_HSI(9);           //系统时钟初始化，时钟源内部HSI
 	cycleCounterInit();				    // Init cycle counter
 	SysTick_Config(SystemCoreClock / 1000);	//SysTick开启系统tick定时器并初始化其中断，1ms
@@ -51,12 +54,9 @@ int main(void)
   SetTX_Mode();                 //设无线模块为接收模式
   controlClibra();							//遥控摇杆校准  
 	TIM4_Init(SysClock,TIME4_Preiod);	  //定时器4初始化，定时时间单位：(TIME4_Preiod)微秒
-
-	
 	
 	LedSet(led2,1);
 	LedSet(led3,1);
-	
 	
 	LoadRCdata(America);               //摇杆赋值
 	UnlockCrazepony();								 //摆杆启动
