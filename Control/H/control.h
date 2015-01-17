@@ -12,7 +12,11 @@
 
 void LoadRCdata(unsigned char RomoteMode);
 void controlClibra(void);
-void UnlockCrazepony(void);
+void RockerUnlockcrazepony(void);
+void KeyLockcrazepony(void);
+void IMUcalibrate(void);
+void Remotecalibrate(void);
+
 
 extern int Throttle;
 extern int Roll;

@@ -26,17 +26,15 @@ main.c file
 
 uint32_t t0,t1;
 
-extern char Lockflag;
+
 extern char IMUcalibratflag;
 extern u8  TX_ADDRESS[TX_ADR_WIDTH];
-static char Locksta = 0xa5;
+extern char Lockflag;
 
 
 int main(void)
 {
-
 	static char ledsta;
-	static u8 i;
 	/*************remote tx addr*******/
 	RemoteTxaddr = 0xd0;
  /***********************************/
@@ -59,7 +57,7 @@ int main(void)
 	LedSet(led3,1);
 	
 	LoadRCdata(America);               //Ò¡¸Ë¸³Öµ
-	UnlockCrazepony();								 //°Ú¸ËÆô¶¯
+	RockerUnlockcrazepony();								 //°Ú¸ËÆô¶¯
   Lockflag = 1;											 //½âËø±êÖ¾
 	
   LedSet(led2,0);
@@ -71,51 +69,17 @@ int main(void)
 if(flag10Hz == 1)  //10Hz 
 		{		
 			flag10Hz = 0;
+			 /*status led*/
 			ledsta = !ledsta;
 			LedSet(signalLED,ledsta);				        
-			
-		 /*crazepony Lock*/
-		  switch( Lockflag )
-			{
-				case 1:
-					  if(Locksta == 0xa5) 
-							{
-								for(i=0;i<5;i++)         
-								CommUAVUpload(MSP_ARM_IT);   //unlock Crazepony
-								Locksta = 0x5a;
-								Lockflag = 0;
-								
-							}
-					  else if(Locksta == 0x5a )
-							{
-								for(i=0;i<5;i++)         
-								CommUAVUpload(MSP_DISARM_IT);	//lock Crazepony
-							  Locksta = 0xa5;
-								Lockflag = 0;
-							}
-					break;
-				case 0:
-					if(Locksta == 0x5a)   LedSet(led5,1);
-				  else if(Locksta == 0xa5) LedSet(led5,0);
-					break;
-		  }		
-	
-			/*IMUcalibratflag  */
-      LedSet(led4,IMUcalibratflag);
-			if(IMUcalibratflag) 
-			{
-				CommUAVUpload(MSP_ACC_CALI);
-				IMUcalibratflag = 0;
-			}
-			
-			
+		  /*crazepony Lock*/
+	    KeyLockcrazepony();
+		  /*IMUcalibrate  */
+			IMUcalibrate();
 			/*remote calibrate*/
-			if((ClibraFlag == FAIL)&&
-				((Throttle<=1510)&&(Throttle>1490)&&
-				(Pitch<=1510)&&(Pitch>=1490)&&
-				(Roll<=1510)&&(Roll>=1490)&&
-				(Yaw<=1510)&&(Yaw>=1490)))
-				controlClibra();	  
+		  Remotecalibrate();
+			
+			
 			
       #ifdef debugprint
 				printf("thr -->%d\r\n",Throttle);
@@ -124,7 +88,6 @@ if(flag10Hz == 1)  //10Hz
 				printf("yaw -->%d\r\n",Yaw);
 			  printf("remote addr -->0x%x\r\n",TX_ADDRESS[4]);// tx addr
 				printf("-------------\r\n");
-			  
 			#endif
 			
 		}
@@ -136,7 +99,6 @@ if(flag50Hz == 1)//
 			
 			flag50Hz = 0;
 			CommUAVUpload(MSP_SET_4CON);
-			
 		}
 		
 if(flag80Hz)// 80Hz 12.5ms
@@ -144,11 +106,6 @@ if(flag80Hz)// 80Hz 12.5ms
 			flag80Hz = 0;
 			LoadRCdata(America);   
 		}
-		
-		
 	}
-	
-	
-	
 }
 
