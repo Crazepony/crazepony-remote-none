@@ -1,13 +1,3 @@
-#include "tim.h"
-#include "stm32f10x_tim.h"
-#include "stm32f10x.h"
-#include "stm32f10x_gpio.h"
-#include "stm32f10x_rcc.h"
-#include "NRF24L01.h"
-#include "Led.h"
-#include "misc.h" 
-#include "Display.h"
-#include "stdio.h"
 /*    
       ____                      _____                  +---+
      / ___\                     / __ \                 | R |
@@ -25,93 +15,69 @@ Tim.c file
 编译环境：MDK-Lite  Version: 4.23
 初版时间: 2014-01-28
 功能：
-1.初始化定时器4，发送遥控数据
-2.初始化定时器3，打印信息
+1.初始化定时器3和定时器4
 ------------------------------------
 */
+#include "config.h"
 
 
+u16 flag10Hzcnt,flag50Hzcnt,flag80Hzcnt,flag100Hzcnt;
 
-	
+u16 flag10Hz,flag50Hz,flag80Hz,flag100Hz;
 
-int Ledcounter;
-
-//定时器控制入口函数
-//定时周期为1ms
-//该逻辑可以用来显示遥控信号的强度，遥控上灯闪得越快，信号越弱
-//因为发送函数里面有个最大重发次数，当收不到应答信号时，在发送函数处会耗时，重发次数越多
-//耗时越多，LED就会出现闪动越厉害的现象
 
 void TIM4_IRQHandler(void)		//1ms中断一次,用于程序读取6050等
 {
     if( TIM_GetITStatus(TIM4 , TIM_IT_Update) != RESET ) 
     {     
-     Ledcounter++;
-      
-     if(Ledcounter==59)Led1=1;
-     if(Ledcounter==60){Led1=0;Ledcounter=0;}
-
-      TxBuf[0]=(Throttle*10)&0xff;
-      TxBuf[1]=((Throttle*10)>>8);     //油门量装入待发送数组的前两个字节
-      TxBuf[2]=Pitch;                  //俯仰角装入第3个字节
-      TxBuf[3]=Roll;                   //横滚角转入第4个字节
-      TxBuf[4]=Yaw;                    //偏航角装入第5个字节
-      TxBuf[31]=(Throttle<=5) ? 0:0xA5;//紧急熄火标志字节控制     
-      NRF24L01_TxPacket(TxBuf);	       //数据包发送，最大重发次数15次
-      TIM_ClearITPendingBit(TIM4 , TIM_FLAG_Update);   //清除中断标志  
-    } 
+			
+			
+					if(++flag10Hzcnt == 100)//10Hz
+								{
+									flag10Hzcnt = 0;
+									flag10Hz = 1;
+								} 
+			
+					if(++flag50Hzcnt == 20)//50Hz
+								{
+									flag50Hzcnt = 0;
+									flag50Hz = 1;
+								}   
+					if(++flag80Hzcnt == 12) //80Hz
+								{
+									flag80Hzcnt = 0;
+									flag80Hz = 1;
+								}
+					if(++flag100Hzcnt == 10) //100Hz
+								{
+									flag100Hzcnt = 0;
+									flag100Hz = 1;
+								}	
+          
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+          TIM_ClearITPendingBit(TIM4 , TIM_FLAG_Update);   //清除中断标志   
+    }
 }
 
-
-
-int DebugCounter;             //打印信息输出时间间隔计数值
-
-#define Debug
 
 void TIM3_IRQHandler(void)		//打印中断服务程序
 {
     if( TIM_GetITStatus(TIM3 , TIM_IT_Update) != RESET ) 
     {     
-#ifdef Debug
-      DebugCounter++;
-      if( DebugCounter==200)
-            {
-            DebugCounter=0;
-//             printf(" ******************************************************************\r\n");
-//             printf(" *       ____                      _____                  +---+   *\r\n");
-//             printf(" *      / ___\\                     / __ \\                 | R |   *\r\n");
-//             printf(" *     / /                        / /_/ /                 +---+   *\r\n");
-//             printf(" *    / /   ________  ____  ___  / ____/___  ____  __   __        *\r\n");
-//             printf(" *   / /  / ___/ __ `/_  / / _ \\/ /   / __ \\/ _  \\/ /  / /        *\r\n");
-//             printf(" *  / /__/ /  / /_/ / / /_/  __/ /   / /_/ / / / / /__/ /         *\r\n");
-//             printf(" *  \\___/_/   \\__,_/ /___/\\___/_/    \\___ /_/ /_/____  /          *\r\n");
-//             printf(" *                                                  / /           *\r\n");
-//             printf(" *                                             ____/ /            *\r\n");
-//             printf(" *                                            /_____/             *\r\n");
-//             printf(" ******************************************************************\r\n");
-           // printf("\r\n");
-            printf(" Crazepony-II报告：系统正在运行...\r\n"); 
-            printf("\r\n--->遥控实时杆量<---\r\n");
-            printf("油门当前值---> %d\r\n",(int) Throttle);
-            printf("俯仰当前值---> %d\r\n",(int) Pitch);
-            printf("横滚当前值---> %d\r\n",(int) Roll);
-            printf("偏航当前值---> %d\r\n",(int) Yaw);
-            
-
-
-        }
-#else      
-             
-#endif
+       
         
         TIM_ClearITPendingBit(TIM3 , TIM_FLAG_Update);   //清除中断标志   
     }
 }
-
-
-
-
-
 
 
 
@@ -134,7 +100,7 @@ void TIM4_Init(char clock,int Preiod)
 
     TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE);
     TIM_Cmd(TIM4,ENABLE);
-    //printf("定时器4初始化完成...\r\n");
+//     printf("定时器4初始化完成...\r\n");
     
 }	
 
@@ -159,7 +125,7 @@ void TIM3_Init(char clock,int Preiod)
     TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);
     TIM_Cmd(TIM3,ENABLE);
   
-    //printf("定时器3初始化完成...\r\n");
+//     printf("定时器3初始化完成...\r\n");
 }		
 
 
@@ -171,19 +137,16 @@ void TimerNVIC_Configuration()
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     //TIM3
     NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;//定时器3作为串口打印定时器
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;//定时器3主优先级为2
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
     //TIM4
     NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;//
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;//定时器4主优先级为1
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 
 } 
-
-
-
 

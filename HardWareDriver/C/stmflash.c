@@ -1,6 +1,3 @@
-#include "stmflash.h"
-#include "delay.h"
-
 /*    
       ____                      _____                  +---+
      / ___\                     / __ \                 | R |
@@ -17,13 +14,12 @@ moto.c file
 作者E-mail：375836945@qq.com
 编译环境：MDK-Lite  Version: 4.23
 初版时间: 2014-01-28
-功能：
-1.内部flash初始化，相当于一个片内的模拟EEPROM
-2.具体操作细节还有些BUG，有些地址读出来的数据有问题，我暂时没找到原因，望各路热血青年一起来解决
 ------------------------------------
 */
-
-
+#include "stmflash.h"
+#include "delay.h"
+#include "UART1.h"
+#include "stdio.h"
 //////////////////////////////////////////////////////////////////////////////////	 
 //stm32f103t8u6--->64K Bytes  flash
 //小容量stm32的最后一页开始地址为0x08007c00，结束地址为0x08007fff
@@ -35,6 +31,7 @@ void STMFLASH_Unlock(void)
 {
   FLASH->KEYR=FLASH_KEY1;//写入解锁序列.
   FLASH->KEYR=FLASH_KEY2;
+  printf("内部FLASH解锁完成...\r\n");
 }
 //flash上锁
 void STMFLASH_Lock(void)
@@ -125,7 +122,7 @@ void STMFLASH_Write_NoCheck(u32 WriteAddr,u16 *pBuffer,u16 NumToWrite)
 	for(i=0;i<NumToWrite;i++)
 	{
 		STMFLASH_WriteHalfWord(WriteAddr,pBuffer[i]);
-	    WriteAddr+=2;//地址增加2.
+	  WriteAddr+=2;//地址增加2.
 	}  
 } 
 //从指定地址开始写入指定长度的数据

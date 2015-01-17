@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_proj.xsd">
 
-  <SchemaVersion>1.0</SchemaVersion>
+  <SchemaVersion>1.1</SchemaVersion>
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
@@ -29,6 +29,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile>SFD\ST\STM32F1xx\STM32F103xx.sfr</SFDFile>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
@@ -43,7 +44,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Output\</OutputDirectory>
-          <OutputName>Crazepony</OutputName>
+          <OutputName>crazepony</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -60,6 +61,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -135,7 +138,7 @@
             <RestoreToolbox>1</RestoreToolbox>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>7</TargetSelection>
+          <TargetSelection>13</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -149,7 +152,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>Segger\JL2CM3.dll</Driver>
+            <Driver>STLink\ST-LINKIII-KEIL_SWO.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -159,9 +162,9 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4100</DriverSelection>
+            <DriverSelection>4104</DriverSelection>
           </Flash1>
-          <Flash2>Segger\JL2CM3.dll</Flash2>
+          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
         </Utilities>
@@ -341,11 +344,12 @@
             <Rwpi>0</Rwpi>
             <wLevel>0</wLevel>
             <uThumb>0</uThumb>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER, STM32F10X_MD</Define>
               <Undefine></Undefine>
-              <IncludePath>.\StartUp;.\User_Src;.\Lib\inc;.\HardWareDriver\C;.\HardWareDriver\H</IncludePath>
+              <IncludePath>.\StartUp;.\User_Src;.\Lib\inc;.\HardWareDriver\BMP085;.\HardWareDriver\C;.\HardWareDriver\H;.\Control\C;.\Control\H</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -356,6 +360,7 @@
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -406,19 +411,9 @@
           <GroupName>HardWareDriver</GroupName>
           <Files>
             <File>
-              <FileName>adc.c</FileName>
+              <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\HardWareDriver\C\adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>Display.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\HardWareDriver\C\Display.c</FilePath>
-            </File>
-            <File>
-              <FileName>Key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\HardWareDriver\C\Key.c</FilePath>
+              <FilePath>.\HardWareDriver\C\delay.c</FilePath>
             </File>
             <File>
               <FileName>Led.c</FileName>
@@ -426,9 +421,19 @@
               <FilePath>.\HardWareDriver\C\Led.c</FilePath>
             </File>
             <File>
+              <FileName>Tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HardWareDriver\C\Tim.c</FilePath>
+            </File>
+            <File>
               <FileName>NRF24L01.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HardWareDriver\C\NRF24L01.c</FilePath>
+            </File>
+            <File>
+              <FileName>SPI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HardWareDriver\C\SPI.c</FilePath>
             </File>
             <File>
               <FileName>stmflash.c</FileName>
@@ -436,14 +441,19 @@
               <FilePath>.\HardWareDriver\C\stmflash.c</FilePath>
             </File>
             <File>
-              <FileName>Tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\HardWareDriver\C\Tim.c</FilePath>
-            </File>
-            <File>
               <FileName>UART1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HardWareDriver\C\UART1.c</FilePath>
+            </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HardWareDriver\C\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>Key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HardWareDriver\C\Key.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -456,19 +466,19 @@
               <FilePath>.\User_Src\main.c</FilePath>
             </File>
             <File>
-              <FileName>delay.c</FileName>
+              <FileName>stm32f10x_it.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\User_Src\delay.c</FilePath>
+              <FilePath>.\User_Src\stm32f10x_it.c</FilePath>
             </File>
             <File>
-              <FileName>sys.c</FileName>
+              <FileName>Sys_Fun.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\User_Src\sys.c</FilePath>
+              <FilePath>.\User_Src\Sys_Fun.c</FilePath>
             </File>
             <File>
-              <FileName>spi.c</FileName>
+              <FileName>ConfigTable.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\User_Src\spi.c</FilePath>
+              <FilePath>.\User_Src\ConfigTable.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -519,6 +529,21 @@
               <FileName>stm32f10x_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Lib\src\stm32f10x_exti.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Control</GroupName>
+          <Files>
+            <File>
+              <FileName>Control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Control\C\Control.c</FilePath>
+            </File>
+            <File>
+              <FileName>CommUAV.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Control\C\CommUAV.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,47 +1,27 @@
+#ifndef __config_H
+#define __config_H
 
 #include "stm32f10x.h"
-#include "stm32f10x_gpio.h"
-#include "stm32f10x_rcc.h"
-#include "math.h"   
-#include "sys.h"
-#include "NRF24L01.h"
-#include "spi.h"
-#include "LED.h"
-#include "stm32f10x_usart.h"
-#include "misc.h"   
-#include "adc.h"   
-#include "LCD5110.h"   
-#include "Tim.h"   
-#include "Display.h"
+#include "stm32f10x_it.h"
 #include "delay.h"
-#include "Key.h"
-#include "command_table.h"
-#include "UART1.h"
-#include "stdio.h"
+#include "Led.h"
+#include "NRF24L01.h"
+#include "Tim.h"
+#include "sys_fun.h"
+#include "SPI.h"
+#include "control.h"
 #include "stmflash.h"
-/* Includes ------------------------------------------------------------------*/
-/* Uncomment/Comment the line below to enable/disable peripheral header file inclusion */
-//#include "stm32f10x_adc.h"
-//#include "stm32f10x_bkp.h"
-//#include "stm32f10x_can.h"
-//#include "stm32f10x_cec.h"
-//#include "stm32f10x_crc.h"
-//#include "stm32f10x_dac.h"
-//#include "stm32f10x_dbgmcu.h"
-//#include "stm32f10x_dma.h"
-//#include "stm32f10x_map.h"
-#include "stm32f10x_exti.h"
-//#include "stm32f10x_flash.h"
-//#include "stm32f10x_fsmc.h"
-//#include "stm32f10x_gpio.h"
-//#include "stm32f10x_i2c.h"
-//#include "stm32f10x_iwdg.h"
-//#include "stm32f10x_pwr.h"
-//#include "stm32f10x_rcc.h"
-//#include "stm32f10x_rtc.h"
-//#include "stm32f10x_sdio.h"
-//#include "stm32f10x_spi.h"
-
-//#include "stm32f10x_wwdg.h"
+#include "math.h"
+#include "stdio.h"
+#include "UART1.h"
+#include "ConfigTable.h"
+#include "adc.h"
+#include "Key.h"
+#include "CommUAV.h"
+#endif
 
 
+#define uart1baudSet 115200
+
+
+//------------------End of File----------------------------

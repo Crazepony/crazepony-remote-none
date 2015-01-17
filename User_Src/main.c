@@ -1,4 +1,4 @@
-/*    
+/*
       ____                      _____                  +---+
      / ___\                     / __ \                 | R |
     / /                        / /_/ /                 +---+
@@ -13,115 +13,139 @@ main.c file
 编写者：小马  (Camel)
 作者E-mail：375836945@qq.com
 编译环境：MDK-Lite  Version: 4.23
-初版时间: 2014-03-28
+初版时间: 2014-01-28
 功能：
-1.遥控主函数入口
-2.遥控方面，我没有花过多的时间去整理程序，只是规定了数据格式
-3.大家可以做优化和修改~。~
 ------------------------------------
 */
+#include "config.h"             //包含所有的驱动头文件
 
-#include      "Config.h"			 //头文件包含
+// uint32_t startTime[5],execTime[5];
+// uint32_t realExecPrd[5];
 
-#define  R_Mode  America  //修改宏定义，切换遥控操作方式为美国手还是日本手
+#define debugprint
 
-extern int offset_flag;
-extern int  Pitch_Offest;
-extern int  Roll_Offest;
+
+uint32_t t0,t1;
+
+extern char Lockflag;
+extern char IMUcalibratflag;
+static char Locksta = 0xa5;
+
 
 int main(void)
 {
-	u16 offset_value;
-	u16 buffer[2];
-    int i = 0;
-	
-	SystemClock_HSI(9);    //系统时钟设置,9倍频，36M
-    NVIC_INIT();	                //中断初始化
-    UART1_init(SysClock,115200);
-    STMFLASH_Unlock();            //内部flash解锁
-    LedInit();						 //LED 初始化	
-    Adc_Init();            //摇杆AD初始化
-    NRF24L01_Init();       //无线模块初始化
-		TX_Mode();						 //发送模式
-    TIM4_Init(SysClock,1000);           //定时器初始化,定时周期为1ms，1ms发送一次摇杆AD值
-    TIM3_Init(SysClock,5000);           //打印调试信息
-    KeyInit();             //按键初始化
-    TxBuf[30]=Syn_byte;    //对应遥控器，该位写0xA5,保证飞机能在开机的时候能收到一个完整的32字节的数据包
-    GetAD(R_Mode);          
-/*******************************************************/
-//以下为遥控解锁段         
-/*******************************************************/
-     while((Throttle>5)||(Roll>5))//解锁条件：油门拉到最低，方向打到最左解锁
-     GetAD(R_Mode);//得到各路AD值并显示
-    
-     TxBuf[28]=ignore_parWrite;     //对应遥控器，该字节写0，使飞机跳过写参数那一步
-     TxBuf[27]=Unlock;              //解锁飞机
-     TxBuf[31]=EnableAircraft;      //解锁成功，使能飞控
-/*******************************************************/
-//解锁完成
-/*******************************************************/
-    
-	Led1=0;
-	Led2=0;
-	Led3=0;
-	Led4=0;
-	Led5=0;
+	static char ledsta;
+	static u8 i;
+	SystemClock_HSI(9);           //系统时钟初始化，时钟源内部HSI
+	cycleCounterInit();				    // Init cycle counter
+	SysTick_Config(SystemCoreClock / 1000);	//SysTick开启系统tick定时器并初始化其中断，1ms
+	UART1_init(SysClock,uart1baudSet); //串口1初始化
+  NVIC_INIT();	                //中断初始化
+  STMFLASH_Unlock();            //内部flash解锁
+  LoadParamsFromEEPROM();				//加载系统参数配置表
+  LedInit();	                  //IO初始化
+  Adc_Init();										//摇杆AD初始化
+	KeyInit();										//按键初始化
+ 	NRF24L01_INIT();              //NRF24L01初始化
+  SetTX_Mode();                 //设无线模块为接收模式
+  controlClibra();							//遥控摇杆校准  
+	TIM4_Init(SysClock,TIME4_Preiod);	  //定时器4初始化，定时时间单位：(TIME4_Preiod)微秒
 
-	//flash中读取遥控微调值
-	STMFLASH_Read(STM32_FLASH_BASE+STM32_FLASH_OFFEST+0,&buffer[0],1);
-	STMFLASH_Read(STM32_FLASH_BASE+STM32_FLASH_OFFEST+4,&buffer[1],1);
 	
-	Pitch_Offest = buffer[0] - 100;
-	Roll_Offest = buffer[1] - 100;
-	if((Pitch_Offest < -100)||(Pitch_Offest > 0)){
-		Pitch_Offest = -50;
-	}
-	if((Roll_Offest < -100)||(Roll_Offest > 0)){
-		Roll_Offest = -50;
-	}
-	printf("read pitch:%d   roll:%d\r\n",Pitch_Offest,Roll_Offest);
-	 													   
- 	while(1)
-	{  
-      
-	    GetAD(R_Mode);    //得到各路AD，中断发送
 	
-		if((1 == offset_flag) && (i > 100)){
-			//遥控微调值被改变，写入flash
-			offset_flag = 0;
-			i = 0;
+	LedSet(led2,1);
+	LedSet(led3,1);
+	
+	
+	LoadRCdata(America);               //摇杆赋值
+	UnlockCrazepony();								 //摆杆启动
+  Lockflag = 1;											 //解锁标志
+	
+  LedSet(led2,0);
+	LedSet(led3,0);
+	 
+  while (1)             
+	{ 
+		
+if(flag10Hz == 1)  //10Hz 
+		{		
+			flag10Hz = 0;
+			ledsta = !ledsta;
+			LedSet(signalLED,ledsta);				        
 			
-			printf("Write Pitch_Offest:%d\r\n",Pitch_Offest);
-		  printf("Write Roll_Offest:%d\r\n",Roll_Offest);
+		 /*crazepony Lock*/
+		  switch( Lockflag )
+			{
+				case 1:
+					  if(Locksta == 0xa5) 
+							{
+								for(i=0;i<5;i++)         
+								CommUAVUpload(MSP_ARM_IT);   //unlock Crazepony
+								Locksta = 0x5a;
+								Lockflag = 0;
+								
+							}
+					  else if(Locksta == 0x5a )
+							{
+								for(i=0;i<5;i++)         
+								CommUAVUpload(MSP_DISARM_IT);	//lock Crazepony
+							  Locksta = 0xa5;
+								Lockflag = 0;
+							}
+					break;
+				case 0:
+					if(Locksta == 0x5a)   LedSet(led5,1);
+				  else if(Locksta == 0xa5) LedSet(led5,0);
+					break;
+		  }		
+	
+			/*IMUcalibratflag  */
+      LedSet(led4,IMUcalibratflag);
+			if(IMUcalibratflag) 
+			{
+				CommUAVUpload(MSP_ACC_CALI);
+				IMUcalibratflag = 0;
+			}
 			
-			buffer[0] =  100 + Pitch_Offest;
-			buffer[1] =  100 + Roll_Offest;
 			
-			STMFLASH_Write(STM32_FLASH_BASE+STM32_FLASH_OFFEST+0,&buffer[0],4);
-			STMFLASH_Write(STM32_FLASH_BASE+STM32_FLASH_OFFEST+4,&buffer[1],4);
+			/*remote calibrate*/
+			if((ClibraFlag == FAIL)&&
+				((Throttle<=1510)&&(Throttle>1490)&&
+				(Pitch<=1510)&&(Pitch>=1490)&&
+				(Roll<=1510)&&(Roll>=1490)&&
+				(Yaw<=1510)&&(Yaw>=1490)))
+				controlClibra();	  
+			
+      #ifdef debugprint
+				printf("thr -->%d\r\n",Throttle);
+				printf("pitch -->%d\r\n",Pitch);
+				printf("roll -->%d\r\n",Roll);
+				printf("yaw -->%d\r\n",Yaw);
+				printf("-------------\r\n");
+			#endif
+			
 		}
-		i++;
- 
-//       
-//    
-// //测试环形缓冲数组用，可以无视或者直接注释掉。不注释也不影响操作
-//     printf("\r\n收到数据[%d] = %d\r\n",i,rx_buffer[i++]);
-//     printf("读指针 = %d\r\n",UartRxbuf.Rd_Indx & UartRxbuf.Mask);
-//     printf("写指针 = %d\r\n",UartRxbuf.Wd_Indx & UartRxbuf.Mask);
-//     printf("可用%d字节\r\n",UartBuf_Cnt(&UartRxbuf));
-//     if(i>UartRxbuf.Mask){
-//     i=0;
-//     //UartBuf_RD(&UartRxbuf);
-//     printf("*********************\r\n");
-//     }
-// /////////////////////////////////////////////////////////////////   
-//       
-//       
-     
+
+if(flag50Hz == 1)//
+		{	
+			t1 = micros() - t0; 
+			t0 = micros();
+			
+			flag50Hz = 0;
+			CommUAVUpload(MSP_SET_4CON);
+			
 		}
+		
+if(flag80Hz)// 80Hz 12.5ms
+		{
+			flag80Hz = 0;
+			LoadRCdata(America);   
+		}
+		
+		
+	}
+	
+	
+	
 }
-
-
-
-
 
