@@ -431,11 +431,6 @@
               <FilePath>.\HardWareDriver\C\NRF24L01.c</FilePath>
             </File>
             <File>
-              <FileName>SPI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\HardWareDriver\C\SPI.c</FilePath>
-            </File>
-            <File>
               <FileName>stmflash.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HardWareDriver\C\stmflash.c</FilePath>
@@ -454,6 +449,11 @@
               <FileName>Key.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HardWareDriver\C\Key.c</FilePath>
+            </File>
+            <File>
+              <FileName>SPI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HardWareDriver\C\SPI.c</FilePath>
             </File>
           </Files>
         </Group>
