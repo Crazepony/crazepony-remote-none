@@ -35,7 +35,7 @@ uint8_t NRF24L01_TXDATA[RX_PLOAD_WIDTH];//nrf24l01需要发送的数据
 
 
 //修改该接收和发送地址，可以供多个飞行器在同一区域飞行，数据不受干扰
-u8  TX_ADDRESS[TX_ADR_WIDTH]= {0x34,0xc3,0x10,0x10,0x64};	//本地地址
+u8  TX_ADDRESS[TX_ADR_WIDTH]= {0x34,0xc3,0x10,0x10,0x14};	//本地地址
 u8  RX_ADDRESS[RX_ADR_WIDTH]= {0x34,0xc3,0x10,0x10,0x11};	//接收地址				
 
 

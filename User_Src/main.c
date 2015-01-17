@@ -29,6 +29,7 @@ uint32_t t0,t1;
 
 extern char Lockflag;
 extern char IMUcalibratflag;
+extern u8  TX_ADDRESS[TX_ADR_WIDTH];
 static char Locksta = 0xa5;
 
 
@@ -121,7 +122,9 @@ if(flag10Hz == 1)  //10Hz
 				printf("pitch -->%d\r\n",Pitch);
 				printf("roll -->%d\r\n",Roll);
 				printf("yaw -->%d\r\n",Yaw);
+			  printf("remote addr -->0x%x\r\n",TX_ADDRESS[4]);// tx addr
 				printf("-------------\r\n");
+			  
 			#endif
 			
 		}
