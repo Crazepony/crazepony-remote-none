@@ -6,6 +6,8 @@
 // #define Lock   0
 // #define UnLock 0xa5
 
+/*****Remote mode switch define******/
+#define AmericaMode  
 
 
 

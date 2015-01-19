@@ -26,9 +26,6 @@ main.c file
 
 
 
-/*****Remote mode switch define******/
-#define AmericaMode  
-
 	
 // uint32_t t0,t1;
 
@@ -42,7 +39,7 @@ int main(void)
 {
 	static char ledsta;
 	/*************remote tx addr*******/
-	RemoteTxaddr = 0xd3;
+	RemoteTxaddr = 0xd4;
  /***********************************/
 	SystemClock_HSI(9);           //系统时钟初始化，时钟源内部HSI
 	cycleCounterInit();				    // Init cycle counter
