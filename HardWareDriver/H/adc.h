@@ -20,11 +20,8 @@
 							  
 #define ADC_CH1  		1  			//通道1		 	    
 #define ADC_CH_TEMP  	16 			//温度传感器通道
+  		
 
-
-#define Japan    	0x5a 			//宏定义日本手
-#define America  	0xa5 			//宏定义美国手
-		
 
 void Adc_Init(void); 				//ADC通道初始化
 u16  Get_Adc(u8 ch); 				//获得某个通道值 

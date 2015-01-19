@@ -24,7 +24,13 @@ main.c file
 
 #define debugprint
 
-uint32_t t0,t1;
+
+
+/*****Remote mode switch define******/
+#define AmericaMode  
+
+	
+// uint32_t t0,t1;
 
 
 extern char IMUcalibratflag;
@@ -36,7 +42,7 @@ int main(void)
 {
 	static char ledsta;
 	/*************remote tx addr*******/
-	RemoteTxaddr = 0xd0;
+	RemoteTxaddr = 0xd3;
  /***********************************/
 	SystemClock_HSI(9);           //系统时钟初始化，时钟源内部HSI
 	cycleCounterInit();				    // Init cycle counter
@@ -56,9 +62,9 @@ int main(void)
 	LedSet(led2,1);
 	LedSet(led3,1);
 	
-	LoadRCdata(America);               //摇杆赋值
-	RockerUnlockcrazepony();								 //摆杆启动
-  Lockflag = 1;											 //解锁标志
+	LoadRCdata();                //摇杆赋值
+	RockerUnlockcrazepony();		 //摆杆启动
+  Lockflag = 1;								 //解锁标志
 	
   LedSet(led2,0);
 	LedSet(led3,0);
@@ -94,8 +100,8 @@ if(flag10Hz == 1)  //10Hz
 
 if(flag50Hz == 1)//
 		{	
-			t1 = micros() - t0; 
-			t0 = micros();
+// 			t1 = micros() - t0; 
+// 			t0 = micros();
 			
 			flag50Hz = 0;
 			CommUAVUpload(MSP_SET_4CON);
@@ -104,7 +110,7 @@ if(flag50Hz == 1)//
 if(flag80Hz)// 80Hz 12.5ms
 		{
 			flag80Hz = 0;
-			LoadRCdata(America);   
+			LoadRCdata();   
 		}
 	}
 }

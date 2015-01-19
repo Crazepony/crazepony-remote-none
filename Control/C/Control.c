@@ -46,12 +46,11 @@ char IMUcalibratflag = 0;
 摇杆数据采集
 输入参数为美国手和日本手
 */
-void LoadRCdata(unsigned char RomoteMode)
+void LoadRCdata(void)
 {
-  switch(RomoteMode)
-  {
+
     /*以下为美国手的对应关系*/
- case America: 
+#ifdef AmericaMode
       Throttle=1500 - (Throttle_Calibra-(1000 + (1000 - (1000*Get_Adc_Average(3,15))/4096)));//采集油门摇杆的位置，由于硬件原因，需要用100-采集值
       Throttle=(Throttle<=1000)?1000:Throttle;               //越界判断
       Throttle=(Throttle>=2000)?2000:Throttle;               //越界判断
@@ -67,27 +66,25 @@ void LoadRCdata(unsigned char RomoteMode)
       Yaw= 1500 - (Yaw_Calibra - (1000 + (1000*Get_Adc_Average(2,15))/4096));//采集横滚摇杆位置，赋值给对应的偏航角
       Yaw=(Yaw<=1000)?1000:Yaw;                //越界判断
       Yaw=(Yaw>=2000)?2000:Yaw;              //越界判断
-          break;
+#else
     /*以下为日本手的对应关系*/
- case Japan:
-	 
-      Throttle=1500 - (Throttle_Calibra-(1000 + (1000 - (1000*Get_Adc_Average(1,15))/4096)));//采集油门摇杆的位置，由于硬件原因，需要用100-采集值
+      Throttle=1500 - (Throttle_Calibra - (1000 + (1000*Get_Adc_Average(1,15))/4096));//采集油门摇杆的位置，由于硬件原因，需要用100-采集值
       Throttle=(Throttle<=1000)?1000:Throttle;               //越界判断
       Throttle=(Throttle>=2000)?2000:Throttle;               //越界判断
 
-      Pitch= 1500 - (Pitch_Calibra - (1000 + (1000*Get_Adc_Average(3,15))/4096));//采集俯仰摇杆的位置，赋值给对应的俯仰变量
+      Pitch= 1500 - (Pitch_Calibra-(1000 + (1000 - (1000*Get_Adc_Average(3,15))/4096)));//采集俯仰摇杆的位置，赋值给对应的俯仰变量
       Pitch=(Pitch<=1000)?1000:Pitch;                 //越界判断
       Pitch=(Pitch>=2000)?2000:Pitch;               //越界判断
 
-      Roll= 1500 - (Roll_Calibra - (1000 + (1000*Get_Adc_Average(0,15))/4096));//采集横滚摇杆位置，赋值给对应的横滚变量
+      Roll=  1500 - (Roll_Calibra - (1000 + (1000*Get_Adc_Average(0,15))/4096));//采集横滚摇杆位置，赋值给对应的横滚变量
       Roll=(Roll<=1000)?1000:Roll;                //越界判断
       Roll=(Roll>=2000)?2000:Roll;              //越界判断
 
-      Yaw= 1500 - (Yaw_Calibra - (1000 + (1000*Get_Adc_Average(2,15))/4096));//采集横滚摇杆位置，赋值给对应的偏航角
+      Yaw=  1500 - (Yaw_Calibra - (1000 + (1000*Get_Adc_Average(2,15))/4096));//采集横滚摇杆位置，赋值给对应的偏航角
       Yaw=(Yaw<=1000)?1000:Yaw;                //越界判断
       Yaw=(Yaw>=2000)?2000:Yaw;              //越界判断
-      break;
-  }
+#endif
+  
 }
 
 
@@ -106,9 +103,13 @@ void controlClibra(void)
 
 		for(i=0;i<clibrasumNum;i++)
 		{
-			
+			#ifdef AmericaMode
 			sum[0] += 1000 + (1000 - (1000*Get_Adc_Average(3,15))/4096);
 			sum[1] += 1000 + (1000*Get_Adc_Average(1,15))/4096;
+			#else
+			sum[0] += 1000 + (1000*Get_Adc_Average(1,15))/4096;
+			sum[1] += 1000 + (1000 - (1000*Get_Adc_Average(3,15))/4096);
+			#endif
 			sum[2] += 1000 + (1000*Get_Adc_Average(0,15))/4096;
 			sum[3] += 1000 + (1000*Get_Adc_Average(2,15))/4096;
 			delay_ms(100);
@@ -123,8 +124,8 @@ void controlClibra(void)
 		Roll_Calibra     = sum[2]/i;
 		Yaw_Calibra      = sum[3]/i;
 
-		LoadRCdata(America);               //摇杆赋值
-		if((Throttle>=1520)||(Throttle<1480)||(Pitch>=1520)||(Pitch<=1480)||(Roll>=1520)||(Roll<=1480)||(Yaw>=1520)||(Yaw<=1480))
+		LoadRCdata();               //摇杆赋值
+		if((Throttle>=1510)||(Throttle<1490)||(Pitch>=1510)||(Pitch<=1490)||(Roll>=1510)||(Roll<=1490)||(Yaw>=1510)||(Yaw<=1490))
 						ClibraFlag       = FAIL;//校准失败
 		else 		ClibraFlag       = OK;//校准成功标志
 		
@@ -173,13 +174,22 @@ void KeyLockcrazepony(void)
 
 
 /****** remote rocker to unlock crazepony****/
-void RockerUnlockcrazepony(void)
+void RockerUnlockcrazepony()
 {
-		while((Throttle>1050)||(Roll>1050))// thr < 1050,roll < 1050
-	 {
-		 LoadRCdata(America);               //
-		 NRF24L01_TxPacket(TxBuf);//9ms
-	 }
+#ifdef AmericaMode
+									while((Throttle>1050)||(Roll>1050))// thr < 1050,roll < 1050
+											 {
+												 LoadRCdata();               //
+												 NRF24L01_TxPacket(TxBuf);//9ms
+											 }
+#else
+			            while((Throttle>1050)||(Yaw>1050))// thr < 1050,yaw < 1050
+											 {
+												 LoadRCdata();            //
+												 NRF24L01_TxPacket(TxBuf);//9ms
+											 }
+#endif
+	
 }
 
 
