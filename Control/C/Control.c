@@ -124,6 +124,12 @@ void controlClibra(void)
 		Roll_Calibra     = sum[2]/i;
 		Yaw_Calibra      = sum[3]/i;
 
+		
+// 		Throttle_Calibra = 1500;
+// 		Pitch_Calibra    = 1500;
+// 		Roll_Calibra     = 1500;
+// 		Yaw_Calibra      = 1500;
+
 		LoadRCdata();               //Ò¡¸Ë¸³Öµ
 		if((Throttle>=1510)||(Throttle<1490)||(Pitch>=1510)||(Pitch<=1490)||(Roll>=1510)||(Roll<=1490)||(Yaw>=1510)||(Yaw<=1490))
 						ClibraFlag       = FAIL;//Ð£×¼Ê§°Ü
@@ -154,8 +160,8 @@ void KeyLockcrazepony(void)
 								CommUAVUpload(MSP_ARM_IT);   //unlock Crazepony
 								Locksta = 0x5a;
 								Lockflag = 0;
-								
 							}
+							
 					  else if(Locksta == 0x5a )
 							{
 								for(i=0;i<5;i++)         
@@ -171,22 +177,22 @@ void KeyLockcrazepony(void)
 		  }	
 }
 
-
-
 /****** remote rocker to unlock crazepony****/
 void RockerUnlockcrazepony()
 {
 #ifdef AmericaMode
 									while((Throttle>1050)||(Roll>1050))// thr < 1050,roll < 1050
 											 {
-												 LoadRCdata();               //
-												 NRF24L01_TxPacket(TxBuf);//9ms
+												 LoadRCdata();            //
+												 CommUAVUpload(MSP_DISARM_IT);
+												 //NRF24L01_TxPacket(TxBuf);//9ms
 											 }
 #else
 			            while((Throttle>1050)||(Yaw>1050))// thr < 1050,yaw < 1050
 											 {
 												 LoadRCdata();            //
-												 NRF24L01_TxPacket(TxBuf);//9ms
+												 CommUAVUpload(MSP_DISARM_IT);
+												 //NRF24L01_TxPacket(TxBuf);//9ms
 											 }
 #endif
 	

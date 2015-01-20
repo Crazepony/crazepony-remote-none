@@ -39,7 +39,7 @@ int main(void)
 {
 	static char ledsta;
 	/*************remote tx addr*******/
-	RemoteTxaddr = 0xd4;
+	RemoteTxaddr = 0x10;
  /***********************************/
 	SystemClock_HSI(9);           //系统时钟初始化，时钟源内部HSI
 	cycleCounterInit();				    // Init cycle counter
@@ -99,15 +99,15 @@ if(flag50Hz == 1)//
 		{	
 // 			t1 = micros() - t0; 
 // 			t0 = micros();
-			
+			LoadRCdata();
 			flag50Hz = 0;
-			CommUAVUpload(MSP_SET_4CON);
+			
 		}
 		
 if(flag80Hz)// 80Hz 12.5ms
 		{
 			flag80Hz = 0;
-			LoadRCdata();   
+			CommUAVUpload(MSP_SET_4CON);   
 		}
 	}
 }
