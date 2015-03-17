@@ -1,5 +1,5 @@
 
-#include "config.h"             //°üº¬ËùÓĞµÄÇı¶¯Í·ÎÄ¼ş
+#include "config.h"             //åŒ…å«æ‰€æœ‰çš„é©±åŠ¨å¤´æ–‡ä»¶
 /*    
       ____                      _____                  +---+
      / ___\                     / __ \                 | R |
@@ -12,14 +12,14 @@
                                             ____/ /
                                            /_____/
 Tim.c file
-±àĞ´Õß£ºĞ¡Âí  (Camel)
-×÷ÕßE-mail£º375836945@qq.com
-±àÒë»·¾³£ºMDK-Lite  Version: 4.23
-³õ°æÊ±¼ä: 2014-01-28
-¹¦ÄÜ£º
-1.°´¼üIO¿Ú³õÊ¼»¯
-2.Õâ²¿·Ö°´¼üµÄ¹¦ÄÜÊÇ¶ÔÍâ¿ª·ÅµÄ£¬ÎÒÃ»ÓĞ¶¨Òå Æä¹¦ÄÜ£¬´ó¼Ò×ÔÓÉ·¢»Ó°É
-3.Ò£¿ØÉÏµÄKey1ÔİÊ±²»ÓÃ£¬ÓàÏÂµÄÈı¸ö°´¼ü×Ô¶¨Òå£¬¿ÉÒÔÉèÖÃÎªÆ«º½µ÷½Ú£¬Ò»¼ü¶¯×÷µÈµÈ
+ç¼–å†™è€…ï¼šå°é©¬  (Camel)
+ä½œè€…E-mailï¼š375836945@qq.com
+ç¼–è¯‘ç¯å¢ƒï¼šMDK-Lite  Version: 4.23
+åˆç‰ˆæ—¶é—´: 2014-01-28
+åŠŸèƒ½ï¼š
+1.æŒ‰é”®IOå£åˆå§‹åŒ–
+2.è¿™éƒ¨åˆ†æŒ‰é”®çš„åŠŸèƒ½æ˜¯å¯¹å¤–å¼€æ”¾çš„ï¼Œæˆ‘æ²¡æœ‰å®šä¹‰ å…¶åŠŸèƒ½ï¼Œå¤§å®¶è‡ªç”±å‘æŒ¥å§
+3.é¥æ§ä¸Šçš„Key1æš‚æ—¶ä¸ç”¨ï¼Œä½™ä¸‹çš„ä¸‰ä¸ªæŒ‰é”®è‡ªå®šä¹‰ï¼Œå¯ä»¥è®¾ç½®ä¸ºåèˆªè°ƒèŠ‚ï¼Œä¸€é”®åŠ¨ä½œç­‰ç­‰
 ------------------------------------
 */
 
@@ -28,12 +28,12 @@ extern int  Pitch_Offest;
 extern int  Roll_Offest;
 
 /********************************************
-              Key³õÊ¼»¯º¯Êı
-¹¦ÄÜ£º
-1.ÅäÖÃKey½Ó¿ÚIOÊäÈë·½Ïò
+              Keyåˆå§‹åŒ–å‡½æ•°
+åŠŸèƒ½ï¼š
+1.é…ç½®Keyæ¥å£IOè¾“å…¥æ–¹å‘
 
-ÃèÊö£º
-Key½Ó¿Ú£º
+æè¿°ï¼š
+Keyæ¥å£ï¼š
 Key1-->PB2
 Key2-->PB1
 Key3-->PB3
@@ -54,14 +54,14 @@ void KeyInit(void)
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
-	/* config the NVIC(¡°£«¡±-->PB3) */
+	/* config the NVIC(â€œï¼‹â€-->PB3) */
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI3_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 5;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
-	/* config the NVIC(¡°£­¡±-->PA8) */
+	/* config the NVIC(â€œï¼â€-->PA8) */
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 6;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
@@ -74,13 +74,13 @@ void KeyInit(void)
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	/* Configure ¡°£«¡±-->PB3 as output push-pull */
+	/* Configure â€œï¼‹â€-->PB3 as output push-pull */
 	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_3 ;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	/* Configure ¡°£­¡±-->PA8 as output push-pull */
+	/* Configure â€œï¼â€-->PA8 as output push-pull */
 	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_8 ;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -89,25 +89,25 @@ void KeyInit(void)
 	
 	//Mode-->PB1
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource1);
-	EXTI_InitStructure.EXTI_Line = EXTI_Line1;            //Éè¶¨Íâ²¿ÖĞ¶Ï1
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;  //Éè¶¨ÖĞ¶ÏÄ£Ê½
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //Éè¶¨ÏÂ½µÑØ´¥·¢Ä£Ê½
+	EXTI_InitStructure.EXTI_Line = EXTI_Line1;            //è®¾å®šå¤–éƒ¨ä¸­æ–­1
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;  //è®¾å®šä¸­æ–­æ¨¡å¼
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //è®¾å®šä¸‹é™æ²¿è§¦å‘æ¨¡å¼
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure);
 
-	//¡°£«¡±-->PB3
+	//â€œï¼‹â€-->PB3
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource3);
-	EXTI_InitStructure.EXTI_Line = EXTI_Line3;            //Éè¶¨Íâ²¿ÖĞ¶Ï1
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;  //Éè¶¨ÖĞ¶ÏÄ£Ê½
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //Éè¶¨ÏÂ½µÑØ´¥·¢Ä£Ê½
+	EXTI_InitStructure.EXTI_Line = EXTI_Line3;            //è®¾å®šå¤–éƒ¨ä¸­æ–­1
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;  //è®¾å®šä¸­æ–­æ¨¡å¼
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //è®¾å®šä¸‹é™æ²¿è§¦å‘æ¨¡å¼
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure);
 
-	//£­-->PA8
+	//ï¼-->PA8
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource8);
-	EXTI_InitStructure.EXTI_Line = EXTI_Line8;              //Éè¶¨Íâ²¿ÖĞ¶Ï1
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;     //Éè¶¨ÖĞ¶ÏÄ£Ê½
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //Éè¶¨ÏÂ½µÑØ´¥·¢Ä£Ê½
+	EXTI_InitStructure.EXTI_Line = EXTI_Line8;              //è®¾å®šå¤–éƒ¨ä¸­æ–­1
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;     //è®¾å®šä¸­æ–­æ¨¡å¼
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //è®¾å®šä¸‹é™æ²¿è§¦å‘æ¨¡å¼
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure);
 	
@@ -119,7 +119,7 @@ void KeyInit(void)
 extern char IMUcalibratflag;
 
 void EXTI1_IRQHandler(void){
-	if(EXTI_GetITStatus(EXTI_Line1) != RESET) //È·±£ÊÇ·ñ²úÉúÁËEXTI LineÖĞ¶Ï
+	if(EXTI_GetITStatus(EXTI_Line1) != RESET) //ç¡®ä¿æ˜¯å¦äº§ç”Ÿäº†EXTI Lineä¸­æ–­
 	{
     
 		ClibraFlag = FAIL;
@@ -136,14 +136,14 @@ void EXTI1_IRQHandler(void){
 		 #endif
 		
 		
-   	EXTI_ClearITPendingBit(EXTI_Line1);     //Çå³ıÖĞ¶Ï±êÖ¾Î»
+   	EXTI_ClearITPendingBit(EXTI_Line1);     //æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
 	}
 }
 
 extern char Lockflag;
 
 void EXTI3_IRQHandler(void){
-	if(EXTI_GetITStatus(EXTI_Line3) != RESET) //È·±£ÊÇ·ñ²úÉúÁËEXTI LineÖĞ¶Ï
+	if(EXTI_GetITStatus(EXTI_Line3) != RESET) //ç¡®ä¿æ˜¯å¦äº§ç”Ÿäº†EXTI Lineä¸­æ–­
 	{
 		
     Lockflag = 1;
@@ -152,14 +152,14 @@ void EXTI3_IRQHandler(void){
 	    	printf("keyaddepress...\r\n");
 		 #endif
 
-		EXTI_ClearITPendingBit(EXTI_Line3);     //Çå³ıÖĞ¶Ï±êÖ¾Î»
+		EXTI_ClearITPendingBit(EXTI_Line3);     //æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
 		
 	}
 }
 
 
 void EXTI9_5_IRQHandler(void){
-	if(EXTI_GetITStatus(EXTI_Line8) != RESET) //È·±£ÊÇ·ñ²úÉúÁËEXTI LineÖĞ¶Ï
+	if(EXTI_GetITStatus(EXTI_Line8) != RESET) //ç¡®ä¿æ˜¯å¦äº§ç”Ÿäº†EXTI Lineä¸­æ–­
 	{	    
 
 		
@@ -172,7 +172,7 @@ void EXTI9_5_IRQHandler(void){
 		
 		
 		
-		EXTI_ClearITPendingBit(EXTI_Line8);     //Çå³ıÖĞ¶Ï±êÖ¾Î»
+		EXTI_ClearITPendingBit(EXTI_Line8);     //æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
 	}
 }
 

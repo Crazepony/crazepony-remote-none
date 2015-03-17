@@ -6,19 +6,19 @@
 #include "NRF24L01.h"
 #include "control.h"
 
-//4rc¶¨Ê±50Hz·¢ËÍ
-//ÆäÓàÖ¸Áî´¥·¢·¢ËÍ
+//4rcå®šæ—¶50Hzå‘é€
+//å…¶ä½™æŒ‡ä»¤è§¦å‘å‘é€
 uint8_t sendBuf[32];
 uint8_t sendCnt=0;
 uint8_t checksum=0;
 
-// Í¨ĞÅĞ­Òé²ãÓëÍ¨ĞÅBUS²ãµÄ½Ó¿Ú£¬ÒÆÖ²ĞèÒªĞŞ¸Ä´Ëº¯Êı¡£
+// é€šä¿¡åè®®å±‚ä¸é€šä¿¡BUSå±‚çš„æ¥å£ï¼Œç§»æ¤éœ€è¦ä¿®æ”¹æ­¤å‡½æ•°ã€‚
 #define NRFUpload() NRF24L01_TxPacket(sendBuf)
 
-//¶ÔÍâµÄ½Ó¿Ú±äÁ¿,ÊäÈërcÊı¾İ
+//å¯¹å¤–çš„æ¥å£å˜é‡,è¾“å…¥rcæ•°æ®
 enum{THROTTLE,YAW,PITCH,ROLL};
 uint16_t rcData[4]={1500,1500,1500,1500};             //1000-2000
-//¶ÔÍâ½Ó¿Úº¯ÊıÔÚ.h
+//å¯¹å¤–æ¥å£å‡½æ•°åœ¨.h
 
 
 // #define CONSTRAIN(_x,min,max)  {if(_x<min) _x=min; if(_x > max) _x=max;}
@@ -41,7 +41,7 @@ static  void uart8chk(uint8_t _x)
   sendBuf[sendCnt++]=_x;    
   checksum ^= _x; 
 }
-//´ó¶Ë
+//å¤§ç«¯
 static void uart16chk(int16_t a)
 {
     uart8chk((uint8_t)(a&0xff));
@@ -110,7 +110,7 @@ void CommUAVUpload(uint8_t cmd)
     }
     uart8chk(checksum); 	  		
     
-    //ÉÏ´«
+    //ä¸Šä¼ 
     NRFUpload();
 }
 

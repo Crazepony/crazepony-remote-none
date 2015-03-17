@@ -11,11 +11,11 @@
                                            /_____/
 */
 /* Control.c file
-±àĞ´Õß£ºĞ¡Âí  (Camel)
-×÷ÕßE-mail£º375836945@qq.com
-±àÒë»·¾³£ºMDK-Lite  Version: 4.23
-³õ°æÊ±¼ä: 2014-01-28
-¹¦ÄÜ£º
+ç¼–å†™è€…ï¼šå°é©¬  (Camel)
+ä½œè€…E-mailï¼š375836945@qq.com
+ç¼–è¯‘ç¯å¢ƒï¼šMDK-Lite  Version: 4.23
+åˆç‰ˆæ—¶é—´: 2014-01-28
+åŠŸèƒ½ï¼š
 ------------------------------------
 */
 
@@ -36,53 +36,53 @@ int Yaw;
 uint16_t Throttle_Calibra=0;
 uint16_t Pitch_Calibra   =0;
 uint16_t Roll_Calibra    =0;
-uint16_t Yaw_Calibra     =0;//Ò¡¸ËĞ£×¼Öµ
+uint16_t Yaw_Calibra     =0;//æ‘‡æ†æ ¡å‡†å€¼
 
 char Lockflag      = 0;
 char IMUcalibratflag = 0;
 
 
 /*
-Ò¡¸ËÊı¾İ²É¼¯
-ÊäÈë²ÎÊıÎªÃÀ¹úÊÖºÍÈÕ±¾ÊÖ
+æ‘‡æ†æ•°æ®é‡‡é›†
+è¾“å…¥å‚æ•°ä¸ºç¾å›½æ‰‹å’Œæ—¥æœ¬æ‰‹
 */
 void LoadRCdata(void)
 {
 
-    /*ÒÔÏÂÎªÃÀ¹úÊÖµÄ¶ÔÓ¦¹ØÏµ*/
+    /*ä»¥ä¸‹ä¸ºç¾å›½æ‰‹çš„å¯¹åº”å…³ç³»*/
 #ifdef AmericaMode
-      Throttle=1500 - (Throttle_Calibra-(1000 + (1000 - (1000*Get_Adc_Average(3,15))/4096)));//²É¼¯ÓÍÃÅÒ¡¸ËµÄÎ»ÖÃ£¬ÓÉÓÚÓ²¼şÔ­Òò£¬ĞèÒªÓÃ100-²É¼¯Öµ
-      Throttle=(Throttle<=1000)?1000:Throttle;               //Ô½½çÅĞ¶Ï
-      Throttle=(Throttle>=2000)?2000:Throttle;               //Ô½½çÅĞ¶Ï
+      Throttle=1500 - (Throttle_Calibra-(1000 + (1000 - (1000*Get_Adc_Average(3,15))/4096)));//é‡‡é›†æ²¹é—¨æ‘‡æ†çš„ä½ç½®ï¼Œç”±äºç¡¬ä»¶åŸå› ï¼Œéœ€è¦ç”¨100-é‡‡é›†å€¼
+      Throttle=(Throttle<=1000)?1000:Throttle;               //è¶Šç•Œåˆ¤æ–­
+      Throttle=(Throttle>=2000)?2000:Throttle;               //è¶Šç•Œåˆ¤æ–­
 
-      Pitch= 1500 - (Pitch_Calibra - (1000 + (1000*Get_Adc_Average(1,15))/4096));//²É¼¯¸©ÑöÒ¡¸ËµÄÎ»ÖÃ£¬¸³Öµ¸ø¶ÔÓ¦µÄ¸©Ñö±äÁ¿
-      Pitch=(Pitch<=1000)?1000:Pitch;                 //Ô½½çÅĞ¶Ï
-      Pitch=(Pitch>=2000)?2000:Pitch;               //Ô½½çÅĞ¶Ï
+      Pitch= 1500 - (Pitch_Calibra - (1000 + (1000*Get_Adc_Average(1,15))/4096));//é‡‡é›†ä¿¯ä»°æ‘‡æ†çš„ä½ç½®ï¼Œèµ‹å€¼ç»™å¯¹åº”çš„ä¿¯ä»°å˜é‡
+      Pitch=(Pitch<=1000)?1000:Pitch;                 //è¶Šç•Œåˆ¤æ–­
+      Pitch=(Pitch>=2000)?2000:Pitch;               //è¶Šç•Œåˆ¤æ–­
 
-      Roll= 1500 - (Roll_Calibra - (1000 + (1000*Get_Adc_Average(0,15))/4096));//²É¼¯ºá¹öÒ¡¸ËÎ»ÖÃ£¬¸³Öµ¸ø¶ÔÓ¦µÄºá¹ö±äÁ¿
-      Roll=(Roll<=1000)?1000:Roll;                //Ô½½çÅĞ¶Ï
-      Roll=(Roll>=2000)?2000:Roll;              //Ô½½çÅĞ¶Ï
+      Roll= 1500 - (Roll_Calibra - (1000 + (1000*Get_Adc_Average(0,15))/4096));//é‡‡é›†æ¨ªæ»šæ‘‡æ†ä½ç½®ï¼Œèµ‹å€¼ç»™å¯¹åº”çš„æ¨ªæ»šå˜é‡
+      Roll=(Roll<=1000)?1000:Roll;                //è¶Šç•Œåˆ¤æ–­
+      Roll=(Roll>=2000)?2000:Roll;              //è¶Šç•Œåˆ¤æ–­
 
-      Yaw= 1500 - (Yaw_Calibra - (1000 + (1000*Get_Adc_Average(2,15))/4096));//²É¼¯ºá¹öÒ¡¸ËÎ»ÖÃ£¬¸³Öµ¸ø¶ÔÓ¦µÄÆ«º½½Ç
-      Yaw=(Yaw<=1000)?1000:Yaw;                //Ô½½çÅĞ¶Ï
-      Yaw=(Yaw>=2000)?2000:Yaw;              //Ô½½çÅĞ¶Ï
+      Yaw= 1500 - (Yaw_Calibra - (1000 + (1000*Get_Adc_Average(2,15))/4096));//é‡‡é›†æ¨ªæ»šæ‘‡æ†ä½ç½®ï¼Œèµ‹å€¼ç»™å¯¹åº”çš„åèˆªè§’
+      Yaw=(Yaw<=1000)?1000:Yaw;                //è¶Šç•Œåˆ¤æ–­
+      Yaw=(Yaw>=2000)?2000:Yaw;              //è¶Šç•Œåˆ¤æ–­
 #else
-    /*ÒÔÏÂÎªÈÕ±¾ÊÖµÄ¶ÔÓ¦¹ØÏµ*/
-      Throttle=1500 - (Throttle_Calibra - (1000 + (1000*Get_Adc_Average(1,15))/4096));//²É¼¯ÓÍÃÅÒ¡¸ËµÄÎ»ÖÃ£¬ÓÉÓÚÓ²¼şÔ­Òò£¬ĞèÒªÓÃ100-²É¼¯Öµ
-      Throttle=(Throttle<=1000)?1000:Throttle;               //Ô½½çÅĞ¶Ï
-      Throttle=(Throttle>=2000)?2000:Throttle;               //Ô½½çÅĞ¶Ï
+    /*ä»¥ä¸‹ä¸ºæ—¥æœ¬æ‰‹çš„å¯¹åº”å…³ç³»*/
+      Throttle=1500 - (Throttle_Calibra - (1000 + (1000*Get_Adc_Average(1,15))/4096));//é‡‡é›†æ²¹é—¨æ‘‡æ†çš„ä½ç½®ï¼Œç”±äºç¡¬ä»¶åŸå› ï¼Œéœ€è¦ç”¨100-é‡‡é›†å€¼
+      Throttle=(Throttle<=1000)?1000:Throttle;               //è¶Šç•Œåˆ¤æ–­
+      Throttle=(Throttle>=2000)?2000:Throttle;               //è¶Šç•Œåˆ¤æ–­
 
-      Pitch= 1500 - (Pitch_Calibra-(1000 + (1000 - (1000*Get_Adc_Average(3,15))/4096)));//²É¼¯¸©ÑöÒ¡¸ËµÄÎ»ÖÃ£¬¸³Öµ¸ø¶ÔÓ¦µÄ¸©Ñö±äÁ¿
-      Pitch=(Pitch<=1000)?1000:Pitch;                 //Ô½½çÅĞ¶Ï
-      Pitch=(Pitch>=2000)?2000:Pitch;               //Ô½½çÅĞ¶Ï
+      Pitch= 1500 - (Pitch_Calibra-(1000 + (1000 - (1000*Get_Adc_Average(3,15))/4096)));//é‡‡é›†ä¿¯ä»°æ‘‡æ†çš„ä½ç½®ï¼Œèµ‹å€¼ç»™å¯¹åº”çš„ä¿¯ä»°å˜é‡
+      Pitch=(Pitch<=1000)?1000:Pitch;                 //è¶Šç•Œåˆ¤æ–­
+      Pitch=(Pitch>=2000)?2000:Pitch;               //è¶Šç•Œåˆ¤æ–­
 
-      Roll=  1500 - (Roll_Calibra - (1000 + (1000*Get_Adc_Average(0,15))/4096));//²É¼¯ºá¹öÒ¡¸ËÎ»ÖÃ£¬¸³Öµ¸ø¶ÔÓ¦µÄºá¹ö±äÁ¿
-      Roll=(Roll<=1000)?1000:Roll;                //Ô½½çÅĞ¶Ï
-      Roll=(Roll>=2000)?2000:Roll;              //Ô½½çÅĞ¶Ï
+      Roll=  1500 - (Roll_Calibra - (1000 + (1000*Get_Adc_Average(0,15))/4096));//é‡‡é›†æ¨ªæ»šæ‘‡æ†ä½ç½®ï¼Œèµ‹å€¼ç»™å¯¹åº”çš„æ¨ªæ»šå˜é‡
+      Roll=(Roll<=1000)?1000:Roll;                //è¶Šç•Œåˆ¤æ–­
+      Roll=(Roll>=2000)?2000:Roll;              //è¶Šç•Œåˆ¤æ–­
 
-      Yaw=  1500 - (Yaw_Calibra - (1000 + (1000*Get_Adc_Average(2,15))/4096));//²É¼¯ºá¹öÒ¡¸ËÎ»ÖÃ£¬¸³Öµ¸ø¶ÔÓ¦µÄÆ«º½½Ç
-      Yaw=(Yaw<=1000)?1000:Yaw;                //Ô½½çÅĞ¶Ï
-      Yaw=(Yaw>=2000)?2000:Yaw;              //Ô½½çÅĞ¶Ï
+      Yaw=  1500 - (Yaw_Calibra - (1000 + (1000*Get_Adc_Average(2,15))/4096));//é‡‡é›†æ¨ªæ»šæ‘‡æ†ä½ç½®ï¼Œèµ‹å€¼ç»™å¯¹åº”çš„åèˆªè§’
+      Yaw=(Yaw<=1000)?1000:Yaw;                //è¶Šç•Œåˆ¤æ–­
+      Yaw=(Yaw>=2000)?2000:Yaw;              //è¶Šç•Œåˆ¤æ–­
 #endif
   
 }
@@ -98,7 +98,7 @@ void controlClibra(void)
 	static int8_t lednum=1;
   static int8_t clibrasumNum = 20;
 
-	if((ClibraFlag == FAIL))//Ğ£×¼Ê§°Ü
+	if((ClibraFlag == FAIL))//æ ¡å‡†å¤±è´¥
 	{
 
 		for(i=0;i<clibrasumNum;i++)
@@ -130,10 +130,10 @@ void controlClibra(void)
 // 		Roll_Calibra     = 1500;
 // 		Yaw_Calibra      = 1500;
 
-		LoadRCdata();               //Ò¡¸Ë¸³Öµ
+		LoadRCdata();               //æ‘‡æ†èµ‹å€¼
 		if((Throttle>=1510)||(Throttle<1490)||(Pitch>=1510)||(Pitch<=1490)||(Roll>=1510)||(Roll<=1490)||(Yaw>=1510)||(Yaw<=1490))
-						ClibraFlag       = FAIL;//Ğ£×¼Ê§°Ü
-		else 		ClibraFlag       = OK;//Ğ£×¼³É¹¦±êÖ¾
+						ClibraFlag       = FAIL;//æ ¡å‡†å¤±è´¥
+		else 		ClibraFlag       = OK;//æ ¡å‡†æˆåŠŸæ ‡å¿—
 		
 					
 		

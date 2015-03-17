@@ -10,12 +10,12 @@
                                             ____/ /
                                            /_____/
 Tim.c file
-±àĞ´Õß£ºĞ¡Âí  (Camel)
-×÷ÕßE-mail£º375836945@qq.com
-±àÒë»·¾³£ºMDK-Lite  Version: 4.23
-³õ°æÊ±¼ä: 2014-01-28
-¹¦ÄÜ£º
-1.³õÊ¼»¯¶¨Ê±Æ÷3ºÍ¶¨Ê±Æ÷4
+ç¼–å†™è€…ï¼šå°é©¬  (Camel)
+ä½œè€…E-mailï¼š375836945@qq.com
+ç¼–è¯‘ç¯å¢ƒï¼šMDK-Lite  Version: 4.23
+åˆç‰ˆæ—¶é—´: 2014-01-28
+åŠŸèƒ½ï¼š
+1.åˆå§‹åŒ–å®šæ—¶å™¨3å’Œå®šæ—¶å™¨4
 ------------------------------------
 */
 #include "config.h"
@@ -26,7 +26,7 @@ u16 flag10Hzcnt,flag50Hzcnt,flag80Hzcnt,flag100Hzcnt;
 u16 flag10Hz,flag50Hz,flag80Hz,flag100Hz;
 
 
-void TIM4_IRQHandler(void)		//1msÖĞ¶ÏÒ»´Î,ÓÃÓÚ³ÌĞò¶ÁÈ¡6050µÈ
+void TIM4_IRQHandler(void)		//1msä¸­æ–­ä¸€æ¬¡,ç”¨äºç¨‹åºè¯»å–6050ç­‰
 {
     if( TIM_GetITStatus(TIM4 , TIM_IT_Update) != RESET ) 
     {     
@@ -64,34 +64,34 @@ void TIM4_IRQHandler(void)		//1msÖĞ¶ÏÒ»´Î,ÓÃÓÚ³ÌĞò¶ÁÈ¡6050µÈ
 			
 			
 			
-          TIM_ClearITPendingBit(TIM4 , TIM_FLAG_Update);   //Çå³ıÖĞ¶Ï±êÖ¾   
+          TIM_ClearITPendingBit(TIM4 , TIM_FLAG_Update);   //æ¸…é™¤ä¸­æ–­æ ‡å¿—   
     }
 }
 
 
-void TIM3_IRQHandler(void)		//´òÓ¡ÖĞ¶Ï·şÎñ³ÌĞò
+void TIM3_IRQHandler(void)		//æ‰“å°ä¸­æ–­æœåŠ¡ç¨‹åº
 {
     if( TIM_GetITStatus(TIM3 , TIM_IT_Update) != RESET ) 
     {     
        
         
-        TIM_ClearITPendingBit(TIM3 , TIM_FLAG_Update);   //Çå³ıÖĞ¶Ï±êÖ¾   
+        TIM_ClearITPendingBit(TIM3 , TIM_FLAG_Update);   //æ¸…é™¤ä¸­æ–­æ ‡å¿—   
     }
 }
 
 
 
-//¶¨Ê±Æ÷4³õÊ¼»¯£ºÓÃÀ´ÖĞ¶Ï´¦ÀíPID
+//å®šæ—¶å™¨4åˆå§‹åŒ–ï¼šç”¨æ¥ä¸­æ–­å¤„ç†PID
 void TIM4_Init(char clock,int Preiod)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4,ENABLE);  //´ò¿ªÊ±ÖÓ
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4,ENABLE);  //æ‰“å¼€æ—¶é’Ÿ
     
     TIM_DeInit(TIM4);
 
     TIM_TimeBaseStructure.TIM_Period = Preiod;
-    TIM_TimeBaseStructure.TIM_Prescaler = clock-1;//¶¨Ê±1ms
+    TIM_TimeBaseStructure.TIM_Prescaler = clock-1;//å®šæ—¶1ms
     TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; 
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
     
@@ -100,22 +100,22 @@ void TIM4_Init(char clock,int Preiod)
 
     TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE);
     TIM_Cmd(TIM4,ENABLE);
-//     printf("¶¨Ê±Æ÷4³õÊ¼»¯Íê³É...\r\n");
+//     printf("å®šæ—¶å™¨4åˆå§‹åŒ–å®Œæˆ...\r\n");
     
 }	
 
 
-//¶¨Ê±Æ÷3³õÊ¼»¯
+//å®šæ—¶å™¨3åˆå§‹åŒ–
 void TIM3_Init(char clock,int Preiod)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE);  //´ò¿ªÊ±ÖÓ
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE);  //æ‰“å¼€æ—¶é’Ÿ
     
     TIM_DeInit(TIM3);
 
     TIM_TimeBaseStructure.TIM_Period = Preiod;
-    TIM_TimeBaseStructure.TIM_Prescaler = clock-1;//¶¨Ê±1ms
+    TIM_TimeBaseStructure.TIM_Prescaler = clock-1;//å®šæ—¶1ms
     TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; 
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
     
@@ -125,7 +125,7 @@ void TIM3_Init(char clock,int Preiod)
     TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);
     TIM_Cmd(TIM3,ENABLE);
   
-//     printf("¶¨Ê±Æ÷3³õÊ¼»¯Íê³É...\r\n");
+//     printf("å®šæ—¶å™¨3åˆå§‹åŒ–å®Œæˆ...\r\n");
 }		
 
 
@@ -137,13 +137,13 @@ void TimerNVIC_Configuration()
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     //TIM3
     NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;//¶¨Ê±Æ÷3Ö÷ÓÅÏÈ¼¶Îª2
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;//å®šæ—¶å™¨3ä¸»ä¼˜å…ˆçº§ä¸º2
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
     //TIM4
     NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;//¶¨Ê±Æ÷4Ö÷ÓÅÏÈ¼¶Îª1
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;//å®šæ—¶å™¨4ä¸»ä¼˜å…ˆçº§ä¸º1
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);

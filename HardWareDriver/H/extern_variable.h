@@ -2,8 +2,8 @@
 #define _EXTERN_VARIABLE_H_
 
  
-//ϵͳ
-extern uint8_t SYS_INIT_OK;					//ϵͳ��ʼ����ɱ�־
+//系统
+extern uint8_t SYS_INIT_OK;					//系统初始化完成标志
 
 #endif
                 

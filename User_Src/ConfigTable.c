@@ -8,9 +8,9 @@
 #include "SysConfig.h"
 //
 #define TABLE_ADDRESS (STM32_FLASH_BASE+STM32_FLASH_OFFEST+0)
-//ÓÃÀ´´æ·ÅEEPROMÁĞ±íÉÏµÄ´æ·ÅµÄ²ÎÊı±äÁ¿µÄĞÅÏ¢
+//ç”¨æ¥å­˜æ”¾EEPROMåˆ—è¡¨ä¸Šçš„å­˜æ”¾çš„å‚æ•°å˜é‡çš„ä¿¡æ¯
 config_table_t table;				     //tobe improved: config mean in const / eeprom.
-//ÇëÇó±£´æ²ÎÊıµ½EEPROMµÄĞÅºÅÁ¿
+//è¯·æ±‚ä¿å­˜å‚æ•°åˆ°EEPROMçš„ä¿¡å·é‡
 uint8_t gParamsSaveEEPROMRequset=0;
 
 #define EEPROM_DEFAULT_VERSION 1
@@ -22,7 +22,7 @@ uint8_t gParamsSaveEEPROMRequset=0;
 extern uint16_t Throttle_Calibra;
 extern uint16_t Pitch_Calibra;
 extern uint16_t Roll_Calibra;
-extern uint16_t Yaw_Calibra ;//Ò¡¸ËĞ£×¼Öµ
+extern uint16_t Yaw_Calibra ;//æ‘‡æ†æ ¡å‡†å€¼
 
 
 
@@ -88,7 +88,7 @@ void LoadParamsFromEEPROM(void)
 	else
 	{
 		
-			ParamSetDefault();//°æ±¾¼ì²â²»¶Ô£¬¸÷Ïî²ÎÊıÉèÎªÄ¬ÈÏÖµ
+			ParamSetDefault();//ç‰ˆæœ¬æ£€æµ‹ä¸å¯¹ï¼Œå„é¡¹å‚æ•°è®¾ä¸ºé»˜è®¤å€¼
 			ParamToTable();
 			table.version=EEPROM_DEFAULT_VERSION;
 			TableWriteEEPROM();

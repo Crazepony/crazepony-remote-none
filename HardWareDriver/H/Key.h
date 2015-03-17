@@ -3,7 +3,7 @@
 
 #include "sys_fun.h"
 
-//#define Key1     PBin(2)//PB2ÊÇBOOT1Òı½Å£¬²»ÓÃ
+//#define Key1     PBin(2)//PB2æ˜¯BOOT1å¼•è„šï¼Œä¸ç”¨
 #define kSet_Mode_Choose         0x12
 #define kValueinc                0x13
 #define kValuedec                0x14
@@ -11,7 +11,7 @@
 
 
 
-void KeyInit(void);   //Key³õÊ¼»¯º¯ÊıÍâ²¿ÉùÃ÷
+void KeyInit(void);   //Keyåˆå§‹åŒ–å‡½æ•°å¤–éƒ¨å£°æ˜
 
 
 #endif

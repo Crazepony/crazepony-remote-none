@@ -3,7 +3,7 @@
 #include "stm32f10x.h"
 
 
-//RCÒ£¿Ø
+//RCé¥æ§
 typedef struct int16_rcget
 {
     float ROOL;
@@ -13,14 +13,14 @@ typedef struct int16_rcget
 }RC_GETDATA;
 
 
-extern RC_GETDATA RC_DATA;//¾­¹ı´¦ÀíµÄRCÊı¾İ
+extern RC_GETDATA RC_DATA;//ç»è¿‡å¤„ç†çš„RCæ•°æ®
    
 void ReceiveDataFormNRF(void);
 void ReceiveDataFormUART(void);
 void Send_PIDToPC(void);
 void Send_AtitudeToPC(void);
-extern int  Rool_error_init;     //Èç¹û·É»úÆğ·É³¯×óÆ«£¬Rool_error_init³¯ÕıÏòÔö´óĞŞ¸Ä;³¯ÓÒÆ«£¬Rool_error_init³¯¸ºÏòÔö´óĞŞ¸Ä
-extern int  Pitch_error_init;     //Èç¹û·É»úÆğ·É³¯Ç°Æ«£¬Pitch_error_init³¯¸ºÏòÔö´óĞŞ¸Ä;³¯ºğÆ«£¬Pitch_error_init³¯ÕıÏòÔö´óĞŞ¸Ä
+extern int  Rool_error_init;     //å¦‚æœé£æœºèµ·é£æœå·¦åï¼ŒRool_error_initæœæ­£å‘å¢å¤§ä¿®æ”¹;æœå³åï¼ŒRool_error_initæœè´Ÿå‘å¢å¤§ä¿®æ”¹
+extern int  Pitch_error_init;     //å¦‚æœé£æœºèµ·é£æœå‰åï¼ŒPitch_error_initæœè´Ÿå‘å¢å¤§ä¿®æ”¹;æœå¼åï¼ŒPitch_error_initæœæ­£å‘å¢å¤§ä¿®æ”¹
 
 
 

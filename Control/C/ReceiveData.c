@@ -10,13 +10,13 @@
                                             ____/ /
                                            /_____/
 ReceiveData.c file
-±àÐ´Õß£ºÐ¡Âí  (Camel)
-×÷ÕßE-mail£º375836945@qq.com
-±àÒë»·¾³£ºMDK-Lite  Version: 4.23
-³õ°æÊ±¼ä: 2014-01-28
-¹¦ÄÜ£º
-1.½ÓÊÕº¯ÊýÎÄ¼þ£¬°üÀ¨½ÓÊÕ2.4GÊý¾Ý£¬UART1µÄÊý¾ÝÁ÷
-2.½âÎöÊý¾Ý°ü£¬·ÖÅä¸ø¶ÔÓ¦µÄ¿ØÖÆÁ¿
+ç¼–å†™è€…ï¼šå°é©¬  (Camel)
+ä½œè€…E-mailï¼š375836945@qq.com
+ç¼–è¯‘çŽ¯å¢ƒï¼šMDK-Lite  Version: 4.23
+åˆç‰ˆæ—¶é—´: 2014-01-28
+åŠŸèƒ½ï¼š
+1.æŽ¥æ”¶å‡½æ•°æ–‡ä»¶ï¼ŒåŒ…æ‹¬æŽ¥æ”¶2.4Gæ•°æ®ï¼ŒUART1çš„æ•°æ®æµ
+2.è§£æžæ•°æ®åŒ…ï¼Œåˆ†é…ç»™å¯¹åº”çš„æŽ§åˆ¶é‡
 ------------------------------------
 */
 
@@ -33,77 +33,77 @@ ReceiveData.c file
 #include "dmp.h"
 
 
-//¶¨Òå·É»ú×î´óÇãÐ±½Ç¶È
+//å®šä¹‰é£žæœºæœ€å¤§å€¾æ–œè§’åº¦
 #define  Angle_Max  35.0
 
-uint8_t FLY_ENABLE=0;//·ÉÐÐÊ¹ÄÜ¶Ë  7/-5    12/15
-//¾ÀÕý×ËÌ¬Îó²î£¬¿ÉÒÔÓÃÀ´µÖ¿¹ÖØÐÄÆ«ÒÆµÈ´øÀ´µÄ³õÊ¼²»Æ½ºâ
-#define  Rool_error_init   7      //Èç¹û·É»úÆð·É³¯×óÆ«£¬Rool_error_init³¯ÕýÏòÔö´óÐÞ¸Ä;³¯ÓÒÆ«£¬Rool_error_init³¯¸ºÏòÔö´óÐÞ¸Ä
-#define  Pitch_error_init  -5      //Èç¹û·É»úÆð·É³¯Ç°Æ«£¬Pitch_error_init³¯¸ºÏòÔö´óÐÞ¸Ä;³¯ºóÆ«£¬Pitch_error_init³¯ÕýÏòÔö´óÐÞ¸Ä
+uint8_t FLY_ENABLE=0;//é£žè¡Œä½¿èƒ½ç«¯  7/-5    12/15
+//çº æ­£å§¿æ€è¯¯å·®ï¼Œå¯ä»¥ç”¨æ¥æŠµæŠ—é‡å¿ƒåç§»ç­‰å¸¦æ¥çš„åˆå§‹ä¸å¹³è¡¡
+#define  Rool_error_init   7      //å¦‚æžœé£žæœºèµ·é£žæœå·¦åï¼ŒRool_error_initæœæ­£å‘å¢žå¤§ä¿®æ”¹;æœå³åï¼ŒRool_error_initæœè´Ÿå‘å¢žå¤§ä¿®æ”¹
+#define  Pitch_error_init  -5      //å¦‚æžœé£žæœºèµ·é£žæœå‰åï¼ŒPitch_error_initæœè´Ÿå‘å¢žå¤§ä¿®æ”¹;æœåŽåï¼ŒPitch_error_initæœæ­£å‘å¢žå¤§ä¿®æ”¹
 
-RC_GETDATA   RC_DATA;	//¾­¹ý´¦ÀíµÄRCÊý¾Ý
+RC_GETDATA   RC_DATA;	//ç»è¿‡å¤„ç†çš„RCæ•°æ®
 
-//º¯ÊýÃû£ºReceiveDataFormNRF()
-//ÊäÈë£ºÎÞ
-//Êä³ö: ÎÞ
-//ÃèÊö£º½«ÊÕµ½µÄ2.4GÒ£¿ØÊý¾Ý¸³Öµ¸ø¶ÔÓ¦µÄ±äÁ¿
-//×÷Õß£ºÂí¿¥
-//±¸×¢£ºÃ»¿¼ÉÏÑÐ£¬ÐÄÇé²»ºÃ
+//å‡½æ•°åï¼šReceiveDataFormNRF()
+//è¾“å…¥ï¼šæ— 
+//è¾“å‡º: æ— 
+//æè¿°ï¼šå°†æ”¶åˆ°çš„2.4Gé¥æŽ§æ•°æ®èµ‹å€¼ç»™å¯¹åº”çš„å˜é‡
+//ä½œè€…ï¼šé©¬éª
+//å¤‡æ³¨ï¼šæ²¡è€ƒä¸Šç ”ï¼Œå¿ƒæƒ…ä¸å¥½
 void ReceiveDataFormNRF(void)
 {
     //PITCH
-    RC_DATA.PITCH=NRF24L01_RXDATA[2]-50;//¼õ50×ö¸ºÊý´«Êä
+    RC_DATA.PITCH=NRF24L01_RXDATA[2]-50;//å‡50åšè´Ÿæ•°ä¼ è¾“
     RC_DATA.PITCH = (RC_DATA.PITCH/50.0)*Angle_Max+Pitch_error_init;
     RC_DATA.PITCH=(RC_DATA.PITCH > Angle_Max)  ? (Angle_Max):(RC_DATA.PITCH);
     RC_DATA.PITCH=(RC_DATA.PITCH < -Angle_Max) ? (-Angle_Max):(RC_DATA.PITCH);
     //ROOL
-    RC_DATA.ROOL=NRF24L01_RXDATA[3]-50;//¼õ50×ö¸ºÊý´«Êä
+    RC_DATA.ROOL=NRF24L01_RXDATA[3]-50;//å‡50åšè´Ÿæ•°ä¼ è¾“
     RC_DATA.ROOL = (RC_DATA.ROOL/50.0)*Angle_Max+Rool_error_init; 
     RC_DATA.ROOL=(RC_DATA.ROOL > Angle_Max)  ? (Angle_Max):(RC_DATA.ROOL);
     RC_DATA.ROOL=(RC_DATA.ROOL < -Angle_Max) ? (-Angle_Max):(RC_DATA.ROOL);
 
     //YAW
     RC_DATA.YAW = NRF24L01_RXDATA[4]-50;
-    //RC_DATA.YAW = 0;                      //YAW½Ç¿ØÖÆÓë·ñ
+    //RC_DATA.YAW = 0;                      //YAWè§’æŽ§åˆ¶ä¸Žå¦
     RC_DATA.YAW = (RC_DATA.YAW/50.0)*Angle_Max;
     RC_DATA.YAW=(RC_DATA.YAW > Angle_Max)  ? (Angle_Max):(RC_DATA.YAW);
     RC_DATA.YAW=(RC_DATA.YAW < -Angle_Max) ? (-Angle_Max):(RC_DATA.YAW);
 
     RC_DATA.THROTTLE=NRF24L01_RXDATA[0]+(NRF24L01_RXDATA[1]<<8);
-    FLY_ENABLE = NRF24L01_RXDATA[31];   //0xA5»ò0£¬¾ö¶¨ÊÇ·ñÊ¹ÄÜ·ÉÐÐ£¬ÓÉÒ£¿ØÆ÷¾ö¶¨
+    FLY_ENABLE = NRF24L01_RXDATA[31];   //0xA5æˆ–0ï¼Œå†³å®šæ˜¯å¦ä½¿èƒ½é£žè¡Œï¼Œç”±é¥æŽ§å™¨å†³å®š
 }
 
-//º¯ÊýÃû£ºReceiveDataFormUART()
-//ÊäÈë£ºÎÞ
-//Êä³ö: ÎÞ
-//ÃèÊö£º½«ÊÕµ½µÄ´®¿ÚÒ£¿ØÊý¾Ý¸³Öµ¸ø¶ÔÓ¦µÄ±äÁ¿
-//×÷Õß£ºÂí¿¥
-//±¸×¢£ºÃ»¿¼ÉÏÑÐ£¬ÐÄÇé²»ºÃ
+//å‡½æ•°åï¼šReceiveDataFormUART()
+//è¾“å…¥ï¼šæ— 
+//è¾“å‡º: æ— 
+//æè¿°ï¼šå°†æ”¶åˆ°çš„ä¸²å£é¥æŽ§æ•°æ®èµ‹å€¼ç»™å¯¹åº”çš„å˜é‡
+//ä½œè€…ï¼šé©¬éª
+//å¤‡æ³¨ï¼šæ²¡è€ƒä¸Šç ”ï¼Œå¿ƒæƒ…ä¸å¥½
 void ReceiveDataFormUART(void)
 {  
 	
   if(rx_buffer[0]==0xAA&&rx_buffer[1]==0xBB)
   {
 		//PITCH
-    RC_DATA.PITCH=rx_buffer[4]-50;//¼õ50×ö¸ºÊý´«Êä
+    RC_DATA.PITCH=rx_buffer[4]-50;//å‡50åšè´Ÿæ•°ä¼ è¾“
     RC_DATA.PITCH = (RC_DATA.PITCH/50.0)*Angle_Max+Pitch_error_init;
     RC_DATA.PITCH=(RC_DATA.PITCH > Angle_Max)  ? (Angle_Max):(RC_DATA.PITCH);
     RC_DATA.PITCH=(RC_DATA.PITCH < -Angle_Max) ? (-Angle_Max):(RC_DATA.PITCH);
     //ROOL
-    RC_DATA.ROOL=rx_buffer[5]-50;//¼õ50×ö¸ºÊý´«Êä
+    RC_DATA.ROOL=rx_buffer[5]-50;//å‡50åšè´Ÿæ•°ä¼ è¾“
     RC_DATA.ROOL = (RC_DATA.ROOL/50.0)*Angle_Max+Rool_error_init; 
     RC_DATA.ROOL=(RC_DATA.ROOL > Angle_Max)  ? (Angle_Max):(RC_DATA.ROOL);
     RC_DATA.ROOL=(RC_DATA.ROOL < -Angle_Max) ? (-Angle_Max):(RC_DATA.ROOL);
 
     //YAW
     RC_DATA.YAW = 50-rx_buffer[6];
-    //RC_DATA.YAW = 0;                      //YAW½Ç¿ØÖÆÓë·ñ
+    //RC_DATA.YAW = 0;                      //YAWè§’æŽ§åˆ¶ä¸Žå¦
     RC_DATA.YAW = 9*(RC_DATA.YAW/50.0)*Angle_Max;
     RC_DATA.YAW=(RC_DATA.YAW > Angle_Max)  ? (Angle_Max):(RC_DATA.YAW);
     RC_DATA.YAW=(RC_DATA.YAW < -Angle_Max) ? (-Angle_Max):(RC_DATA.YAW);
     
     RC_DATA.THROTTLE=rx_buffer[2]+(rx_buffer[3]<<8);
-		if(rx_buffer[31]==0xA5)FLY_ENABLE=0xA5;//0xA5»ò0£¬¾ö¶¨ÊÇ·ñÊ¹ÄÜ·ÉÐÐ£¬ÓÉÒ£¿ØÆ÷¾ö¶¨
+		if(rx_buffer[31]==0xA5)FLY_ENABLE=0xA5;//0xA5æˆ–0ï¼Œå†³å®šæ˜¯å¦ä½¿èƒ½é£žè¡Œï¼Œç”±é¥æŽ§å™¨å†³å®š
 		else if(rx_buffer[31]==0x00)FLY_ENABLE=0;
   }
 }
@@ -116,7 +116,7 @@ void Send_SaveAckToPC()
 	UART1_Put_Char(0x88);
 	UART1_Put_Char(0xAE);
 	UART1_Put_Char(0xcc);
-//·¢ËÍ×ËÌ¬Êý¾Ý£º
+//å‘é€å§¿æ€æ•°æ®ï¼š
 	_temp = (int)(PID_Motor.P*10);
 	sum += Uart1_Put_Char((unsigned char)(_temp&0xff00)>>8);
 	sum += Uart1_Put_Char((unsigned char)(_temp&0x00ff));
@@ -126,7 +126,7 @@ void Send_SaveAckToPC()
   _temp = (int)(PID_Motor.D*10);
 	sum += Uart1_Put_Char((unsigned char)(_temp&0xff00)>>8);
 	sum += Uart1_Put_Char((unsigned char)(_temp&0x00ff));
-//·¢ËÍµç»úÊý¾Ý£º
+//å‘é€ç”µæœºæ•°æ®ï¼š
 	_temp =TIM2->CCR1/10;
 	sum += Uart1_Put_Char((unsigned char)(_temp&0xff00)>>8);
 	sum += Uart1_Put_Char((unsigned char)(_temp&0x00ff));
@@ -150,7 +150,7 @@ void Send_SaveAckToPC()
 // 	UART1_Put_Char(0x88);
 // 	UART1_Put_Char(0xAD);
 // 	UART1_Put_Char(0x1A);
-// //·¢ËÍ×ËÌ¬Êý¾Ý£º
+// //å‘é€å§¿æ€æ•°æ®ï¼š
 // 	_temp = (int)(PID_Motor.P*10);
 // 	sum += Uart1_Put_Char((unsigned char)(_temp&0xff00)>>8);
 // 	sum += Uart1_Put_Char((unsigned char)(_temp&0x00ff));
@@ -160,7 +160,7 @@ void Send_SaveAckToPC()
 //   _temp = (int)(PID_Motor.D*10);
 // 	sum += Uart1_Put_Char((unsigned char)(_temp&0xff00)>>8);
 // 	sum += Uart1_Put_Char((unsigned char)(_temp&0x00ff));
-// //·¢ËÍµç»úÊý¾Ý£º
+// //å‘é€ç”µæœºæ•°æ®ï¼š
 // 	_temp =TIM2->CCR1/10;
 // 	sum += Uart1_Put_Char((unsigned char)(_temp&0xff00)>>8);
 // 	sum += Uart1_Put_Char((unsigned char)(_temp&0x00ff));
@@ -183,7 +183,7 @@ void Send_AtitudeToPC()
 	UART1_Put_Char(0x88);
 	UART1_Put_Char(0xAF);
 	UART1_Put_Char(0x1c);
-//·¢ËÍ×ËÌ¬Êý¾Ý£º
+//å‘é€å§¿æ€æ•°æ®ï¼š
 	_temp = (int)(Q_ANGLE.Pitch+200);
 	sum += Uart1_Put_Char((unsigned char)(_temp>>8));
 	sum += Uart1_Put_Char((unsigned char)(_temp&0x00ff));
@@ -193,7 +193,7 @@ void Send_AtitudeToPC()
   _temp = (int)(Q_ANGLE.Yaw+200);
 	sum += Uart1_Put_Char((unsigned char)(_temp>>8));
 	sum += Uart1_Put_Char((unsigned char)(_temp&0x00ff));
-//·¢ËÍµç»úÊý¾Ý£º
+//å‘é€ç”µæœºæ•°æ®ï¼š
 	_temp =TIM2->CCR1/10;
 	sum += Uart1_Put_Char((unsigned char)(_temp&0xff00)>>8);
 	sum += Uart1_Put_Char((unsigned char)(_temp&0x00ff));

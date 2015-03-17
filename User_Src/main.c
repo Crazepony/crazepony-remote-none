@@ -10,14 +10,14 @@
                                             ____/ /
                                            /_____/
 main.c file
-±àĞ´Õß£ºĞ¡Âí  (Camel)
-×÷ÕßE-mail£º375836945@qq.com
-±àÒë»·¾³£ºMDK-Lite  Version: 4.23
-³õ°æÊ±¼ä: 2014-01-28
-¹¦ÄÜ£º
+ç¼–å†™è€…ï¼šå°é©¬  (Camel)
+ä½œè€…E-mailï¼š375836945@qq.com
+ç¼–è¯‘ç¯å¢ƒï¼šMDK-Lite  Version: 4.23
+åˆç‰ˆæ—¶é—´: 2014-01-28
+åŠŸèƒ½ï¼š
 ------------------------------------
 */
-#include "config.h"             //°üº¬ËùÓĞµÄÇı¶¯Í·ÎÄ¼ş
+#include "config.h"             //åŒ…å«æ‰€æœ‰çš„é©±åŠ¨å¤´æ–‡ä»¶
 
 // uint32_t startTime[5],execTime[5];
 // uint32_t realExecPrd[5];
@@ -41,27 +41,27 @@ int main(void)
 	/*************remote tx addr*******/
 	RemoteTxaddr = 0x10;
  /***********************************/
-	SystemClock_HSI(9);           //ÏµÍ³Ê±ÖÓ³õÊ¼»¯£¬Ê±ÖÓÔ´ÄÚ²¿HSI
+	SystemClock_HSI(9);           //ç³»ç»Ÿæ—¶é’Ÿåˆå§‹åŒ–ï¼Œæ—¶é’Ÿæºå†…éƒ¨HSI
 	cycleCounterInit();				    // Init cycle counter
-	SysTick_Config(SystemCoreClock / 1000);	//SysTick¿ªÆôÏµÍ³tick¶¨Ê±Æ÷²¢³õÊ¼»¯ÆäÖĞ¶Ï£¬1ms
-	UART1_init(SysClock,uart1baudSet); //´®¿Ú1³õÊ¼»¯
-  NVIC_INIT();	                //ÖĞ¶Ï³õÊ¼»¯
-  STMFLASH_Unlock();            //ÄÚ²¿flash½âËø
-  LoadParamsFromEEPROM();				//¼ÓÔØÏµÍ³²ÎÊıÅäÖÃ±í
-  LedInit();	                  //IO³õÊ¼»¯
-  Adc_Init();										//Ò¡¸ËAD³õÊ¼»¯
-	KeyInit();										//°´¼ü³õÊ¼»¯
- 	NRF24L01_INIT();              //NRF24L01³õÊ¼»¯
-  SetTX_Mode();                 //ÉèÎŞÏßÄ£¿éÎª½ÓÊÕÄ£Ê½
-  controlClibra();							//Ò£¿ØÒ¡¸ËĞ£×¼  
-	TIM4_Init(SysClock,TIME4_Preiod);	  //¶¨Ê±Æ÷4³õÊ¼»¯£¬¶¨Ê±Ê±¼äµ¥Î»£º(TIME4_Preiod)Î¢Ãë
+	SysTick_Config(SystemCoreClock / 1000);	//SysTickå¼€å¯ç³»ç»Ÿtickå®šæ—¶å™¨å¹¶åˆå§‹åŒ–å…¶ä¸­æ–­ï¼Œ1ms
+	UART1_init(SysClock,uart1baudSet); //ä¸²å£1åˆå§‹åŒ–
+  NVIC_INIT();	                //ä¸­æ–­åˆå§‹åŒ–
+  STMFLASH_Unlock();            //å†…éƒ¨flashè§£é”
+  LoadParamsFromEEPROM();				//åŠ è½½ç³»ç»Ÿå‚æ•°é…ç½®è¡¨
+  LedInit();	                  //IOåˆå§‹åŒ–
+  Adc_Init();										//æ‘‡æ†ADåˆå§‹åŒ–
+	KeyInit();										//æŒ‰é”®åˆå§‹åŒ–
+ 	NRF24L01_INIT();              //NRF24L01åˆå§‹åŒ–
+  SetTX_Mode();                 //è®¾æ— çº¿æ¨¡å—ä¸ºæ¥æ”¶æ¨¡å¼
+  controlClibra();							//é¥æ§æ‘‡æ†æ ¡å‡†  
+	TIM4_Init(SysClock,TIME4_Preiod);	  //å®šæ—¶å™¨4åˆå§‹åŒ–ï¼Œå®šæ—¶æ—¶é—´å•ä½ï¼š(TIME4_Preiod)å¾®ç§’
 	
 	LedSet(led2,1);
 	LedSet(led3,1);
 	
-	LoadRCdata();                //Ò¡¸Ë¸³Öµ
-	RockerUnlockcrazepony();		 //°Ú¸ËÆô¶¯
-  Lockflag = 1;								 //½âËø±êÖ¾
+	LoadRCdata();                //æ‘‡æ†èµ‹å€¼
+	RockerUnlockcrazepony();		 //æ‘†æ†å¯åŠ¨
+  Lockflag = 1;								 //è§£é”æ ‡å¿—
 	
   LedSet(led2,0);
 	LedSet(led3,0);

@@ -9,8 +9,8 @@
 #define led4      4
 #define led5      5
 
-void LedInit(void);   //Led³õÊ¼»¯º¯ÊıÍâ²¿ÉùÃ÷
-void LedSet(u8 ch,char sta);//LEDµãÁÁ¹Ø±Õ
+void LedInit(void);   //Ledåˆå§‹åŒ–å‡½æ•°å¤–éƒ¨å£°æ˜
+void LedSet(u8 ch,char sta);//LEDç‚¹äº®å…³é—­
 
 
 #endif
