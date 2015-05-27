@@ -50,7 +50,7 @@ void LoadRCdata(void)
 {
 
     /*以下为美国手的对应关系*/
-#ifdef AmericaMode
+#ifdef AMERICAN_RC_MODE
       Throttle=1500 - (Throttle_Calibra-(1000 + (1000 - (1000*Get_Adc_Average(3,15))/4096)));//采集油门摇杆的位置，由于硬件原因，需要用100-采集值
       Throttle=(Throttle<=1000)?1000:Throttle;               //越界判断
       Throttle=(Throttle>=2000)?2000:Throttle;               //越界判断
@@ -103,7 +103,7 @@ void controlClibra(void)
 
 		for(i=0;i<clibrasumNum;i++)
 		{
-			#ifdef AmericaMode
+			#ifdef AMERICAN_RC_MODE
 			sum[0] += 1000 + (1000 - (1000*Get_Adc_Average(3,15))/4096);
 			sum[1] += 1000 + (1000*Get_Adc_Average(1,15))/4096;
 			#else
@@ -145,7 +145,6 @@ void controlClibra(void)
 
 
 static char Locksta = 0xa5;
-extern char Lockflag;
 
 /****** press key to unlock crazepony****/
 void KeyLockcrazepony(void)
@@ -180,7 +179,7 @@ void KeyLockcrazepony(void)
 /****** remote rocker to unlock crazepony****/
 void RockerUnlockcrazepony()
 {
-#ifdef AmericaMode
+#ifdef AMERICAN_RC_MODE
 									while((Throttle>1050)||(Roll>1050))// thr < 1050,roll < 1050
 											 {
 												 LoadRCdata();            //

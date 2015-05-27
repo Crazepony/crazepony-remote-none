@@ -19,17 +19,6 @@ main.c file
 */
 #include "config.h"             //包含所有的驱动头文件
 
-// uint32_t startTime[5],execTime[5];
-// uint32_t realExecPrd[5];
-
-#define debugprint
-
-
-
-	
-// uint32_t t0,t1;
-
-
 extern char IMUcalibratflag;
 extern u8  TX_ADDRESS[TX_ADR_WIDTH];
 extern char Lockflag;
@@ -40,7 +29,7 @@ int main(void)
 	static char ledsta;
 	/*************remote tx addr*******/
 	RemoteTxaddr = 0x10;
- /***********************************/
+	/***********************************/
 	SystemClock_HSI(9);           //系统时钟初始化，时钟源内部HSI
 	cycleCounterInit();				    // Init cycle counter
 	SysTick_Config(SystemCoreClock / 1000);	//SysTick开启系统tick定时器并初始化其中断，1ms
@@ -68,43 +57,40 @@ int main(void)
 	 
   while (1)             
 	{ 
-		
-if(flag10Hz == 1)  //10Hz 
+		//10Hz loop
+		if(flag10Hz == 1)  //10Hz 
 		{		
 			flag10Hz = 0;
-			 /*status led*/
+			/*status led*/
 			ledsta = !ledsta;
 			LedSet(signalLED,ledsta);				        
-		  /*crazepony Lock*/
-	    KeyLockcrazepony();
-		  /*IMUcalibrate  */
+			/*crazepony Lock*/
+			KeyLockcrazepony();
+			/*IMUcalibrate  */
 			IMUcalibrate();
 			/*remote calibrate*/
-		  Remotecalibrate();
+			Remotecalibrate();
 			
-			
-			
-      #ifdef debugprint
+			#ifdef UART_DEBUG
 				printf("thr -->%d\r\n",Throttle);
 				printf("pitch -->%d\r\n",Pitch);
 				printf("roll -->%d\r\n",Roll);
 				printf("yaw -->%d\r\n",Yaw);
-			  printf("remote addr -->0x%x\r\n",TX_ADDRESS[4]);// tx addr
+				printf("remote addr -->0x%x\r\n",TX_ADDRESS[4]);// tx addr
 				printf("-------------\r\n");
 			#endif
-			
 		}
 
-if(flag50Hz == 1)//
-		{	
-// 			t1 = micros() - t0; 
-// 			t0 = micros();
+		//50Hz loop
+		if(flag50Hz == 1)
+		{
 			LoadRCdata();
 			flag50Hz = 0;
 			
 		}
 		
-if(flag80Hz)// 80Hz 12.5ms
+		// 80Hz 12.5ms
+		if(flag80Hz)
 		{
 			flag80Hz = 0;
 			CommUAVUpload(MSP_SET_4CON);   

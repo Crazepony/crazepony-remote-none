@@ -12,14 +12,13 @@
                                             ____/ /
                                            /_____/
 Tim.c file
-编写者：小马  (Camel)
+编写者：小马  (Camel)、Nieyong
 作者E-mail：375836945@qq.com
 编译环境：MDK-Lite  Version: 4.23
 初版时间: 2014-01-28
 功能：
 1.按键IO口初始化
 2.这部分按键的功能是对外开放的，我没有定义 其功能，大家自由发挥吧
-3.遥控上的Key1暂时不用，余下的三个按键自定义，可以设置为偏航调节，一键动作等等
 ------------------------------------
 */
 
@@ -103,7 +102,7 @@ void KeyInit(void)
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure);
 
-	//－-->PA8
+	//“－”-->PA8
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource8);
 	EXTI_InitStructure.EXTI_Line = EXTI_Line8;              //设定外部中断1
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;     //设定中断模式
@@ -123,33 +122,23 @@ void EXTI1_IRQHandler(void){
 	{
     
 		ClibraFlag = FAIL;
-		
-		
-		
-		
-		
-		
-		
-		
-		 #ifdef debugprint
-	    	printf("keymodepress...\r\n");
+		 #ifdef UART_DEBUG
+	    	printf("key mode press...\r\n");
 		 #endif
-		
-		
+
    	EXTI_ClearITPendingBit(EXTI_Line1);     //清除中断标志位
 	}
 }
 
 extern char Lockflag;
 
+//“+”按键，控制电机是否待机转动
 void EXTI3_IRQHandler(void){
 	if(EXTI_GetITStatus(EXTI_Line3) != RESET) //确保是否产生了EXTI Line中断
 	{
-		
     Lockflag = 1;
-
-		 #ifdef debugprint
-	    	printf("keyaddepress...\r\n");
+		 #ifdef UART_DEBUG
+	    	printf("key add press...\r\n");
 		 #endif
 
 		EXTI_ClearITPendingBit(EXTI_Line3);     //清除中断标志位
@@ -157,21 +146,16 @@ void EXTI3_IRQHandler(void){
 	}
 }
 
-
+//“-”按键，控制IMU校准
 void EXTI9_5_IRQHandler(void){
 	if(EXTI_GetITStatus(EXTI_Line8) != RESET) //确保是否产生了EXTI Line中断
 	{	    
-
-		
-		
 		 IMUcalibratflag = !IMUcalibratflag;		
 		
-		 #ifdef debugprint
-	    	printf("keysubepress...\r\n");
+		 #ifdef UART_DEBUG
+	    	printf("key sub press...\r\n");
 		 #endif
-		
-		
-		
+
 		EXTI_ClearITPendingBit(EXTI_Line8);     //清除中断标志位
 	}
 }
