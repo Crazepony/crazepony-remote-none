@@ -146,35 +146,52 @@ void controlClibra(void)
 
 
 static char Locksta = 0xa5;
-
+static u8 cnt = 3;
 /****** press key to unlock crazepony****/
 void KeyLockcrazepony(void)
 {
 	u8 i;
-			  switch( Lockflag )
-			{
-				case 1:
-					  if(Locksta == 0xa5) 
-							{
-								for(i=0;i<5;i++)         
-								CommUAVUpload(MSP_ARM_IT);   //unlock Crazepony
-								Locksta = 0x5a;
-								Lockflag = 0;
-							}
-							
-					  else if(Locksta == 0x5a )
-							{
-								for(i=0;i<5;i++)         
-								CommUAVUpload(MSP_DISARM_IT);	//lock Crazepony
-							  Locksta = 0xa5;
-								Lockflag = 0;
-							}
+	
+	if(0 == ++cnt){
+		//防止数据溢出
+		cnt = 3;
+	}
+	
+	switch( Lockflag )
+	{
+		case 1:
+				//解决按键连按的毛刺
+				//本函数会被主循环10Hz调用，测试发现cnt为1或者2的时候，（200ms以下），属于按键毛刺，应该剔除
+				if(cnt < 3){
+					printf("invalid key press:%d\n",cnt);
+					cnt = 0;
+					Lockflag = 0;
 					break;
-				case 0:
-					if(Locksta == 0x5a)   LedSet(led5,1);
-				  else if(Locksta == 0xa5) LedSet(led5,0);
-					break;
-		  }	
+				}else{
+					cnt = 0;
+				}
+		
+				if(Locksta == 0xa5) 
+				{
+					for(i=0;i<5;i++)         
+					CommUAVUpload(MSP_ARM_IT);   //unlock Crazepony
+					Locksta = 0x5a;
+					Lockflag = 0;
+				}
+					
+				else if(Locksta == 0x5a )
+				{
+					for(i=0;i<5;i++)         
+					CommUAVUpload(MSP_DISARM_IT);	//lock Crazepony
+					Locksta = 0xa5;
+					Lockflag = 0;
+				}
+			break;
+		case 0:
+			if(Locksta == 0x5a)   LedSet(led5,1);
+			else if(Locksta == 0xa5) LedSet(led5,0);
+			break;
+	}	
 }
 
 /****** remote rocker to unlock crazepony****/

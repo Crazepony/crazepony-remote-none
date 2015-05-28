@@ -52,8 +52,8 @@ int main(void)
 	LedSet(led3,1);
 	
 	LoadRCdata();                //摇杆赋值
-	//RockerUnlockcrazepony();		 //摆杆启动
-  Lockflag = 1;								 //解锁标志
+	//RockerUnlockcrazepony();	 //摆杆启动
+  Lockflag = 0;								 //解锁标志，1表示产生了一次按键操作，0表示该按键操作已经发送到飞控
 	
   LedSet(led2,0);
 	LedSet(led3,0);
