@@ -42,7 +42,10 @@ int main(void)
 	KeyInit();										//按键初始化
  	NRF24L01_INIT();              //NRF24L01初始化
   SetTX_Mode();                 //设无线模块为接收模式
-  controlClibra();							//遥控摇杆校准  
+  controlClibra();							//遥控摇杆校准
+#ifdef UART_DEBUG  
+	TIM3_Init(SysClock,2000);			//定时器初始化，1s为周期打印摇杆值
+#endif
 	TIM4_Init(SysClock,TIME4_Preiod);	  //定时器4初始化，定时时间单位：(TIME4_Preiod)微秒
 	
 	LedSet(led2,1);
@@ -70,15 +73,6 @@ int main(void)
 			IMUcalibrate();
 			/*remote calibrate*/
 			Remotecalibrate();
-			
-			#ifdef UART_DEBUG
-				printf("thr -->%d\r\n",Throttle);
-				printf("pitch -->%d\r\n",Pitch);
-				printf("roll -->%d\r\n",Roll);
-				printf("yaw -->%d\r\n",Yaw);
-				printf("remote addr -->0x%x\r\n",TX_ADDRESS[4]);// tx addr
-				printf("-------------\r\n");
-			#endif
 		}
 
 		//50Hz loop

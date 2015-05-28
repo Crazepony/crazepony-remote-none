@@ -19,6 +19,7 @@
 ------------------------------------
 */
 
+#include "config.h"
 #include "adc.h"
 #include "control.h"
 #include "ConfigTable.h"

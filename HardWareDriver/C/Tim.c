@@ -20,18 +20,17 @@ Tim.c file
 */
 #include "config.h"
 
+extern u8  TX_ADDRESS[TX_ADR_WIDTH];
 
 u16 flag10Hzcnt,flag50Hzcnt,flag80Hzcnt,flag100Hzcnt;
 
 u16 flag10Hz,flag50Hz,flag80Hz,flag100Hz;
 
 
-void TIM4_IRQHandler(void)		//1ms中断一次,用于程序读取6050等
+void TIM4_IRQHandler(void)		//1ms中断一次,用于遥控器主循环
 {
     if( TIM_GetITStatus(TIM4 , TIM_IT_Update) != RESET ) 
     {     
-			
-			
 					if(++flag10Hzcnt == 100)//10Hz
 								{
 									flag10Hzcnt = 0;
@@ -53,17 +52,7 @@ void TIM4_IRQHandler(void)		//1ms中断一次,用于程序读取6050等
 									flag100Hzcnt = 0;
 									flag100Hz = 1;
 								}	
-          
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
           TIM_ClearITPendingBit(TIM4 , TIM_FLAG_Update);   //清除中断标志   
     }
 }
@@ -73,8 +62,13 @@ void TIM3_IRQHandler(void)		//打印中断服务程序
 {
     if( TIM_GetITStatus(TIM3 , TIM_IT_Update) != RESET ) 
     {     
-       
-        
+				printf("thr -->%d\r\n",Throttle);
+				printf("pitch -->%d\r\n",Pitch);
+				printf("roll -->%d\r\n",Roll);
+				printf("yaw -->%d\r\n",Yaw);
+				printf("remote addr -->0x%x\r\n",TX_ADDRESS[4]);// tx addr
+				printf("-------------\r\n");
+
         TIM_ClearITPendingBit(TIM3 , TIM_FLAG_Update);   //清除中断标志   
     }
 }
@@ -115,7 +109,8 @@ void TIM3_Init(char clock,int Preiod)
     TIM_DeInit(TIM3);
 
     TIM_TimeBaseStructure.TIM_Period = Preiod;
-    TIM_TimeBaseStructure.TIM_Prescaler = clock-1;//定时1ms
+		//预分频系数为36000-1，这样计数器时钟为72MHz/36000 = 2kHz
+    TIM_TimeBaseStructure.TIM_Prescaler = 36000 - 1;
     TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; 
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
     

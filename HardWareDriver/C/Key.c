@@ -22,6 +22,7 @@ Tim.c file
 ------------------------------------
 */
 
+#include "config.h"
 
 extern int  Pitch_Offest;
 extern int  Roll_Offest;
