@@ -52,7 +52,7 @@ int main(void)
 	LedSet(led3,1);
 	
 	LoadRCdata();                //摇杆赋值
-	RockerUnlockcrazepony();		 //摆杆启动
+	//RockerUnlockcrazepony();		 //摆杆启动
   Lockflag = 1;								 //解锁标志
 	
   LedSet(led2,0);
