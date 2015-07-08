@@ -17,6 +17,7 @@ uint16_t pitCalibraVaule;
 uint16_t rollCalibraVaule;
 uint16_t yawCalibraVaule;
 uint16_t Clibra_flag;
+uint16_t tx_addr;
 }config_table_t;
 
 extern config_table_t table;	

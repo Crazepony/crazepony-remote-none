@@ -20,15 +20,12 @@ main.c file
 #include "config.h"             //包含所有的驱动头文件
 
 extern char IMUcalibratflag;
-extern u8  TX_ADDRESS[TX_ADR_WIDTH];
 extern char Lockflag;
 
 
 int main(void)
 {
 	static char ledsta;
-	/*************remote tx addr*******/
-	RemoteTxaddr = 0x10;
 	/***********************************/
 	SystemClock_HSI(9);           //系统时钟初始化，时钟源内部HSI
 	cycleCounterInit();				    // Init cycle counter

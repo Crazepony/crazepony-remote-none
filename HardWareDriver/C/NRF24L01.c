@@ -23,27 +23,27 @@ NRF24L01.c file
 #include "spi.h"
 #include "UART1.h"
 #include "stdio.h"
+#include "stdlib.h"
+#include "ConfigTable.h"
 
 u8 TxBuf[32];//发送数组
 u8 RxBuf[32];//接收数组
 
 
 
-uint8_t NRF24L01_RXDATA[RX_PLOAD_WIDTH];//nrf24l01接收到的数据
-uint8_t NRF24L01_TXDATA[RX_PLOAD_WIDTH];//nrf24l01需要发送的数据
-
-
-
 //修改该接收和发送地址，可以供多个飞行器在同一区域飞行，数据不受干扰
 u8  TX_ADDRESS[TX_ADR_WIDTH]= {0x34,0xc3,0x10,0x10,0x00};	//本地地址
-u8  RX_ADDRESS[RX_ADR_WIDTH]= {0x34,0xc3,0x10,0x10,0x11};	//接收地址				
+u8  RX_ADDRESS[RX_ADR_WIDTH]= {0x34,0xc3,0x10,0x10,0x11};	//接收地址	
+
+uint8_t NRF24L01_RXDATA[RX_PLOAD_WIDTH];//nrf24l01接收到的数据
+uint8_t NRF24L01_TXDATA[RX_PLOAD_WIDTH];//nrf24l01需要发送的数据
 
 
 //写寄存器
 uint8_t NRF_Write_Reg(uint8_t reg, uint8_t value)
 {
     uint8_t status;
-    SPI_CSN_L();					  
+    SPI_CSN_L();
     status = SPI_RW(reg);  
     SPI_RW(value);		  /* 写数据 */
     SPI_CSN_H();					  /* 禁止该器件 */
@@ -146,19 +146,6 @@ void SetTX_Mode(void)
   
 } 
 
-// //查询中断
-// void Nrf_Irq(void)
-// {
-//     uint8_t sta = NRF_Read_Reg(NRF_READ_REG + NRFRegSTATUS);
-//     if(sta & (1<<RX_DR))//接收轮训标志位
-//     {
-//         NRF_Read_Buf(RD_RX_PLOAD,NRF24L01_RXDATA,RX_PLOAD_WIDTH);// read receive payload from RX_FIFO buffer
-//     }
-//     NRF_Write_Reg(0x27, sta);//清除nrf的中断标志位
-// }
-
-
-
 //启动NRF24L01发送一次数据
 //txbuf:待发送数据首地址
 //返回值:发送完成状况
@@ -202,6 +189,15 @@ u8 NRF24L01_RxPacket(u8 *rxbuf)
 	return 1;//没收到任何数据
 }		
 
+//给遥控器NRF24L01设置随机的地址
+void NRF24L01_SetTxAddr(void)
+{
+	srand((unsigned)time(NULL));  
+	TX_ADDRESS[4] = rand()%0xff;
+	
+	//保存到EEPROM中
+	SaveParamsToEEPROM();
+}
 
 
 //判断SPI接口是否接入NRF芯片是否可用
@@ -210,7 +206,12 @@ u8 NRF24L01_Check(void)
    u8 buf[5]={0xC2,0xC2,0xC2,0xC2,0xC2}; 
    u8 buf1[5]; 
    u8 i=0; 
-    
+	 
+	 //Set a rand TX address in init
+	 if(0x00 == TX_ADDRESS[4]){
+		 NRF24L01_SetTxAddr();
+	 }
+	 
    /*写入5 个字节的地址.  */ 
    NRF_Write_Buf(NRF_WRITE_REG+TX_ADDR,buf,5); 
      
@@ -227,4 +228,5 @@ u8 NRF24L01_Check(void)
    if (i==5)   {printf("NRF24L01 found...\r\n");return 1 ;}        //MCU 与NRF 成功连接 
    else        {printf("NRF24L01 not found...\r\n");return 0 ;}        //MCU与NRF不正常连接    
 } 
+
 

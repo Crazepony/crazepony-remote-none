@@ -126,6 +126,8 @@ void EXTI1_IRQHandler(void){
 		 #ifdef UART_DEBUG
 	    	printf("key mode press...\r\n");
 		 #endif
+		
+		NRF24L01_SetTxAddr();
 
    	EXTI_ClearITPendingBit(EXTI_Line1);     //清除中断标志位
 	}

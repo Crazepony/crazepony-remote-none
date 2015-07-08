@@ -56,9 +56,6 @@
 
 #define NRF24L01_IRQ  PAin(11)  //IRQ主机数据输入
 
-#define RemoteTxaddr   TX_ADDRESS[4]  //remote tx addr
-
-
 
 
 char NRF24L01_INIT(void);
@@ -74,6 +71,7 @@ uint8_t NRF_Write_Buf(uint8_t reg, uint8_t *pBuf, uint8_t uchars);
 u8 NRF24L01_RxPacket(u8 *rxbuf);
 u8 NRF24L01_TxPacket(u8 *txbuf);
 u8 NRF24L01_Check(void);
+void NRF24L01_SetTxAddr(void);
 
 extern uint8_t NRF24L01_RXDATA[32];
 extern uint8_t NRF24L01_TXDATA[32];
@@ -81,8 +79,7 @@ extern uint8_t NRF24L01_TXDATA[32];
 extern u8 TxBuf[32];//外部声明发送数组
 extern u8 RxBuf[32];//外部声明接收数组
 
-
-
+extern u8 TX_ADDRESS[TX_ADR_WIDTH];
 
 #endif
 
