@@ -125,7 +125,7 @@ void SetRX_Mode(void)
   	NRF_Write_Reg(NRF_WRITE_REG+RF_SETUP,0x0f);//设置TX发射参数,0db增益,2Mbps,低噪声增益开启   
   	NRF_Write_Reg(NRF_WRITE_REG+CONFIG, 0x0f);//配置基本工作模式的参数;PWR_UP,EN_CRC,16BIT_CRC,接收模式 
     SPI_CE_H();
-    printf("NRF24L01设为接收模式...\r\n");
+    printf("NRF24L01 set to RX mode...\r\n");
 } 
 
 //发送模式
@@ -224,7 +224,7 @@ u8 NRF24L01_Check(void)
       break; 
    } 
   
-   if (i==5)   {printf("初始化NRF24L01成功...\r\n");return 1 ;}        //MCU 与NRF 成功连接 
-   else        {printf("初始化NRF24L01出错...\r\n");return 0 ;}        //MCU与NRF不正常连接    
+   if (i==5)   {printf("NRF24L01 found...\r\n");return 1 ;}        //MCU 与NRF 成功连接 
+   else        {printf("NRF24L01 not found...\r\n");return 0 ;}        //MCU与NRF不正常连接    
 } 
 

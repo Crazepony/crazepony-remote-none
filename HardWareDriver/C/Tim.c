@@ -94,7 +94,7 @@ void TIM4_Init(char clock,int Preiod)
 
     TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE);
     TIM_Cmd(TIM4,ENABLE);
-//     printf("定时器4初始化完成...\r\n");
+		printf("Timer 4 init success...\r\n");
     
 }	
 
@@ -120,7 +120,7 @@ void TIM3_Init(char clock,int Preiod)
     TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);
     TIM_Cmd(TIM3,ENABLE);
   
-//     printf("定时器3初始化完成...\r\n");
+		printf("Timer 3 init success...\r\n");
 }		
 
 
