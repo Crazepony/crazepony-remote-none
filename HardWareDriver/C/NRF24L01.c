@@ -192,8 +192,11 @@ u8 NRF24L01_RxPacket(u8 *rxbuf)
 //给遥控器NRF24L01设置随机的地址
 void NRF24L01_SetTxAddr(void)
 {
-	srand((unsigned)time(NULL));  
-	TX_ADDRESS[4] = rand()%0xff;
+	unsigned time = micros();
+	
+	printf("time is 0x%x\r\n",time);
+	TX_ADDRESS[4] = (u8)time;
+	
 	
 	//保存到EEPROM中
 	SaveParamsToEEPROM();
